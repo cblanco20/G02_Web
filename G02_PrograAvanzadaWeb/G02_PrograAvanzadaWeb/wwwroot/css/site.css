@@ -1,31 +1,1104 @@
+
+/* =========================================================
+   ESTILOS BASE DEL PROYECTO
+   ========================================================= */
+
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem rgba(22, 140, 85, 0.25);
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 0;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+.form-floating > .form-control-plaintext::placeholder,
+.form-floating > .form-control::placeholder {
+    color: var(--bs-secondary-color);
+    text-align: end;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+.form-floating > .form-control-plaintext:focus::placeholder,
+.form-floating > .form-control:focus::placeholder {
+    text-align: start;
 }
+
+
+/* =========================================================
+   MEALPREP - PALETA GENERAL
+   ========================================================= */
+
+:root {
+    --mealprep-green-dark: #0F5132;
+    --mealprep-green: #168C55;
+    --mealprep-green-bright: #2FBF71;
+    --mealprep-green-light: #75C843;
+    --mealprep-orange: #FF8A1F;
+    --mealprep-yellow: #F9C846;
+    --mealprep-cream: #FFF9F0;
+    --mealprep-soft-green: #F1FBF5;
+    --mealprep-background: #F7FBF8;
+    --mealprep-text: #173D2B;
+    --mealprep-muted: #61756A;
+}
+
+
+/* =========================================================
+   FONDO GENERAL
+   ========================================================= */
+
+body {
+    background-color: var(--mealprep-background);
+}
+
+.content-wrapper {
+    background-color: var(--mealprep-background);
+}
+
+
+/* =========================================================
+   MARCA DEL MENÚ LATERAL
+   ========================================================= */
+
+.mealprep-brand {
+    min-height: 90px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+}
+
+    .mealprep-brand .app-brand-link {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+    }
+
+.mealprep-menu-logo {
+    width: 58px;
+    height: 58px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+/* Nombre MealPrep */
+
+.mealprep-brand-name {
+    font-family: 'Pacifico', cursive;
+    font-size: 27px;
+    line-height: 1;
+    white-space: nowrap;
+    letter-spacing: -0.5px;
+}
+
+.mealprep-brand-meal {
+    color: var(--mealprep-green-dark);
+}
+
+.mealprep-brand-prep {
+    color: var(--mealprep-green-light);
+}
+
+
+/* =========================================================
+   MENÚ LATERAL
+   ========================================================= */
+
+.bg-menu-theme {
+    background-color: #ffffff !important;
+}
+
+    .bg-menu-theme .menu-inner > .menu-item.active > .menu-link {
+        background-color: #DFF5E8 !important;
+        color: var(--mealprep-green) !important;
+    }
+
+    .bg-menu-theme .menu-inner > .menu-item.active:before {
+        background: var(--mealprep-green) !important;
+    }
+
+    .bg-menu-theme .menu-item.active .menu-icon {
+        color: var(--mealprep-green) !important;
+    }
+
+    .bg-menu-theme .menu-link:hover {
+        color: var(--mealprep-green) !important;
+    }
+
+
+/* =========================================================
+   NAVBAR SUPERIOR
+   ========================================================= */
+
+#layout-navbar {
+    border-radius: 14px;
+}
+
+    #layout-navbar .bx-search {
+        color: #718A7C;
+    }
+
+    #layout-navbar .form-control::placeholder {
+        color: #A0AEA6;
+    }
+
+
+/* =========================================================
+   BOTONES GENERALES
+   ========================================================= */
+
+.btn-primary {
+    background-color: var(--mealprep-green) !important;
+    border-color: var(--mealprep-green) !important;
+    color: #ffffff !important;
+}
+
+    .btn-primary:hover,
+    .btn-primary:focus {
+        background-color: var(--mealprep-green-dark) !important;
+        border-color: var(--mealprep-green-dark) !important;
+    }
+
+.btn-outline-primary {
+    color: var(--mealprep-green) !important;
+    border-color: var(--mealprep-green) !important;
+}
+
+    .btn-outline-primary:hover {
+        color: #ffffff !important;
+        background-color: var(--mealprep-green) !important;
+        border-color: var(--mealprep-green) !important;
+    }
+
+.mealprep-login-btn {
+    border-radius: 10px;
+    padding: 0.65rem 1.25rem;
+}
+
+
+/* =========================================================
+   HERO PRINCIPAL
+   Imagen Bowl.png de fondo
+   ========================================================= */
+
+.mealprep-hero {
+    position: relative;
+    min-height: 460px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 26px;
+    background-image: url('/img/Bowl.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: 0 14px 35px rgba(24, 70, 48, 0.12);
+}
+
+/* Capa blanca para permitir leer el texto */
+
+.mealprep-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient( 90deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.95) 30%, rgba(255, 255, 255, 0.72) 48%, rgba(255, 255, 255, 0.18) 72%, rgba(255, 255, 255, 0.03) 100% );
+}
+
+.mealprep-hero-content {
+    position: relative;
+    z-index: 2;
+    width: 58%;
+    padding: 55px;
+}
+
+.mealprep-badge {
+    display: inline-block;
+    padding: 9px 18px;
+    border-radius: 50px;
+    background-color: rgba(255, 255, 255, 0.95);
+    color: var(--mealprep-green);
+    font-size: 0.9rem;
+    font-weight: 700;
+    box-shadow: 0 5px 18px rgba(26, 92, 58, 0.10);
+}
+
+.mealprep-title {
+    color: var(--mealprep-text);
+    font-size: 3rem;
+    line-height: 1.08;
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    max-width: 620px;
+}
+
+    .mealprep-title span {
+        color: var(--mealprep-green);
+    }
+
+.mealprep-description {
+    color: var(--mealprep-muted);
+    font-size: 1.08rem;
+    line-height: 1.8;
+    max-width: 570px;
+    margin-top: 18px;
+}
+
+.mealprep-more-btn {
+    background-color: rgba(255, 255, 255, 0.88);
+}
+
+
+/* =========================================================
+   TÍTULOS DE SECCIONES
+   ========================================================= */
+
+.mealprep-section-label {
+    color: var(--mealprep-green);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+.mealprep-section-title {
+    color: var(--mealprep-text);
+    margin-top: 8px;
+    font-weight: 700;
+}
+
+    .mealprep-section-title span {
+        color: var(--mealprep-green);
+    }
+
+
+/* =========================================================
+   FUNCIONALIDADES
+   Tarjetas principales
+   ========================================================= */
+
+.mealprep-feature-card {
+    border: none;
+    border-radius: 22px;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 10px 28px rgba(20, 80, 50, 0.09);
+}
+
+    .mealprep-feature-card:hover {
+        transform: translateY(-7px);
+        box-shadow: 0 18px 35px rgba(20, 80, 50, 0.16);
+    }
+
+    .mealprep-feature-card .card-body {
+        padding: 30px;
+    }
+
+    .mealprep-feature-card h4 {
+        font-weight: 700;
+        color: var(--mealprep-text);
+    }
+
+    .mealprep-feature-card p {
+        color: #486657 !important;
+        line-height: 1.7;
+    }
+
+
+/* =========================================================
+   TARJETA 1 - PLANIFICA TU SEMANA
+   ========================================================= */
+
+.mealprep-card-plan {
+    background: linear-gradient( 135deg, #D9F7E4 0%, #AEEAC3 100% );
+}
+
+    .mealprep-card-plan .mealprep-icon {
+        background-color: rgba(255, 255, 255, 0.90);
+        color: #15955B;
+    }
+
+
+/* =========================================================
+   TARJETA 2 - DESCUBRE RECETAS
+   ========================================================= */
+
+.mealprep-card-recipes {
+    background: linear-gradient( 135deg, #FFE7D2 0%, #FFC895 100% );
+}
+
+    .mealprep-card-recipes .mealprep-icon {
+        background-color: rgba(255, 255, 255, 0.90);
+        color: #F47B20;
+    }
+
+
+/* =========================================================
+   TARJETA 3 - LISTA DE COMPRAS
+   ========================================================= */
+
+.mealprep-card-shopping {
+    background: linear-gradient( 135deg, #FFF3C2 0%, #FFE17A 100% );
+}
+
+    .mealprep-card-shopping .mealprep-icon {
+        background-color: rgba(255, 255, 255, 0.90);
+        color: #D18E00;
+    }
+
+
+/* =========================================================
+   ICONOS DE TARJETAS
+   ========================================================= */
+
+.mealprep-icon {
+    width: 62px;
+    height: 62px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 18px;
+    font-size: 28px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.06);
+}
+
+
+/* Se mantienen por compatibilidad */
+
+.mealprep-icon-green {
+    color: var(--mealprep-green);
+}
+
+.mealprep-icon-orange {
+    color: var(--mealprep-orange);
+}
+
+.mealprep-icon-yellow {
+    color: #C88700;
+}
+
+
+/* =========================================================
+   SECCIÓN DESCUBRE MEALPREP
+   Texto + 3 fotografías
+   ========================================================= */
+
+.mealprep-discover {
+    margin-top: 35px;
+    margin-bottom: 35px;
+}
+
+.mealprep-discover-text {
+    color: var(--mealprep-muted);
+    font-size: 1rem;
+    line-height: 1.85;
+    margin-top: 18px;
+    margin-bottom: 25px;
+}
+
+.mealprep-benefit {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin-bottom: 14px;
+    color: var(--mealprep-text);
+    font-weight: 600;
+}
+
+    .mealprep-benefit i {
+        color: var(--mealprep-green);
+        font-size: 1.45rem;
+    }
+
+
+/* =========================================================
+   CUADRÍCULA DE FOTOGRAFÍAS
+   ========================================================= */
+
+.mealprep-photo-grid {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    grid-template-rows: 185px 185px;
+    gap: 14px;
+}
+
+.mealprep-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 10px 28px rgba(24, 70, 48, 0.13);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+    .mealprep-photo:hover {
+        transform: scale(1.015);
+        box-shadow: 0 14px 32px rgba(24, 70, 48, 0.18);
+    }
+
+.mealprep-photo-main {
+    grid-row: 1 / 3;
+}
+
+.mealprep-photo-small {
+    min-height: 0;
+}
+
+
+/* =========================================================
+   CÓMO FUNCIONA
+   ========================================================= */
+
+.mealprep-how {
+    background: linear-gradient( 135deg, #E6F8EC 0%, #F6FFF8 100% );
+    border-radius: 28px;
+    padding: 45px;
+    box-shadow: 0 8px 28px rgba(20, 80, 50, 0.05);
+}
+
+
+/* Logo completo grande */
+
+.mealprep-full-logo {
+    width: 100%;
+    max-width: 390px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+    .mealprep-full-logo:hover {
+        transform: scale(1.03);
+    }
+
+
+/* Pasos */
+
+.mealprep-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    margin-top: 24px;
+}
+
+.mealprep-step-number {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: linear-gradient( 135deg, var(--mealprep-green), var(--mealprep-green-bright) );
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    box-shadow: 0 6px 14px rgba(22, 140, 85, 0.20);
+}
+
+.mealprep-step h5 {
+    color: var(--mealprep-text);
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.mealprep-step p {
+    color: var(--mealprep-muted);
+    margin-bottom: 0;
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   CTA FINAL
+   ¿LISTO PARA ORGANIZAR TU SEMANA?
+   ========================================================= */
+
+.mealprep-cta {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient( 135deg, #0F5132 0%, #168C55 55%, #23A864 100% );
+    color: #ffffff;
+    border-radius: 28px;
+    padding: 48px 25px;
+    margin-top: 35px;
+    box-shadow: 0 15px 35px rgba(15, 81, 50, 0.18);
+}
+
+
+    /* Decoraciones */
+
+    .mealprep-cta::before {
+        content: "";
+        position: absolute;
+        width: 250px;
+        height: 250px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        left: -90px;
+        bottom: -130px;
+    }
+
+    .mealprep-cta::after {
+        content: "";
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        right: -70px;
+        top: -100px;
+    }
+
+
+/* Logo sin fondo */
+
+.mealprep-cta-logo {
+    position: relative;
+    z-index: 2;
+    width: 110px;
+    height: 110px;
+    object-fit: contain;
+    margin-bottom: 12px;
+}
+
+.mealprep-cta h2 {
+    position: relative;
+    z-index: 2;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.mealprep-cta p {
+    position: relative;
+    z-index: 2;
+    max-width: 620px;
+    margin: 12px auto 25px;
+    color: rgba(255, 255, 255, 0.88);
+}
+
+.mealprep-cta .btn {
+    position: relative;
+    z-index: 2;
+    background-color: #ffffff !important;
+    border-color: #ffffff !important;
+    color: var(--mealprep-green-dark) !important;
+    font-weight: 600;
+    padding-left: 28px;
+    padding-right: 28px;
+}
+
+    .mealprep-cta .btn:hover {
+        background-color: #FFF3C7 !important;
+        border-color: #FFF3C7 !important;
+    }
+
+
+/* =========================================================
+   FOOTER MEALPREP
+   ========================================================= */
+
+.mealprep-footer {
+    background: linear-gradient( 135deg, #093D27 0%, #0F5132 55%, #12633D 100% );
+    color: #ffffff;
+    margin-top: 40px;
+    padding: 38px 0;
+}
+
+
+/* Marca del footer */
+
+.mealprep-footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.mealprep-footer-logo {
+    width: 68px;
+    height: 68px;
+    object-fit: contain;
+}
+
+.mealprep-footer-name {
+    font-family: 'Pacifico', cursive;
+    font-size: 27px;
+    line-height: 1.2;
+}
+
+    .mealprep-footer-name span {
+        color: #ffffff;
+    }
+
+    .mealprep-footer-name strong {
+        color: #8BD44A;
+        font-weight: 400;
+    }
+
+.mealprep-footer-brand small {
+    color: rgba(255, 255, 255, 0.68);
+}
+
+
+/* Links del footer */
+
+.mealprep-footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+    .mealprep-footer-links a {
+        color: rgba(255, 255, 255, 0.82);
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+        .mealprep-footer-links a:hover {
+            color: #A7E86A;
+        }
+
+
+/* Copyright */
+
+.mealprep-footer-copy {
+    color: rgba(255, 255, 255, 0.68);
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET
+   ========================================================= */
+
+@media (max-width: 991.98px) {
+
+    .mealprep-hero {
+        min-height: 500px;
+        background-position: 65% center;
+    }
+
+    .mealprep-hero-overlay {
+        background: rgba(255, 255, 255, 0.88);
+    }
+
+    .mealprep-hero-content {
+        width: 100%;
+        padding: 40px;
+    }
+
+    .mealprep-title {
+        font-size: 2.4rem;
+    }
+
+    .mealprep-photo-grid {
+        grid-template-rows: 165px 165px;
+    }
+
+    .mealprep-how {
+        padding: 32px;
+    }
+
+    .mealprep-full-logo {
+        max-width: 300px;
+    }
+
+    .mealprep-footer,
+    .mealprep-footer .text-lg-end {
+        text-align: center !important;
+    }
+
+    .mealprep-footer-brand {
+        justify-content: center;
+    }
+
+    .mealprep-footer-links {
+        justify-content: center;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE - CELULAR
+   ========================================================= */
+
+@media (max-width: 575.98px) {
+
+    .mealprep-brand {
+        min-height: 75px;
+    }
+
+    .mealprep-menu-logo {
+        width: 48px;
+        height: 48px;
+    }
+
+    .mealprep-brand-name {
+        font-size: 23px;
+    }
+
+    .mealprep-hero {
+        min-height: 520px;
+        border-radius: 18px;
+    }
+
+    .mealprep-hero-content {
+        padding: 28px;
+    }
+
+    .mealprep-title {
+        font-size: 2rem;
+        letter-spacing: -0.8px;
+    }
+
+    .mealprep-description {
+        font-size: 0.95rem;
+    }
+
+    .mealprep-feature-card .card-body {
+        padding: 24px;
+    }
+
+    .mealprep-photo-grid {
+        display: block;
+    }
+
+    .mealprep-photo {
+        height: 220px;
+        margin-bottom: 14px;
+    }
+
+    .mealprep-how {
+        padding: 28px 20px;
+    }
+
+    .mealprep-cta {
+        padding: 40px 18px;
+    }
+
+    .mealprep-cta-logo {
+        width: 90px;
+        height: 90px;
+    }
+
+    .mealprep-footer {
+        padding: 30px 18px;
+    }
+}
+/* =========================================================
+   LOGIN MEALPREP
+   ========================================================= */
+
+
+/* =========================================================
+   PÁGINA COMPLETA
+   ========================================================= */
+
+.mealprep-auth-page {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: linear-gradient( rgba(248, 252, 245, 0.20), rgba(248, 252, 245, 0.20) ), url('/img/fondo.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+
+    /* Quitamos márgenes que puedan dejar espacios */
+
+    .mealprep-auth-page .container-xxl {
+        width: 100%;
+        min-height: 100vh;
+        max-width: none;
+        padding: 0;
+    }
+
+
+    /* =========================================================
+   CONTENEDOR LOGIN
+   ========================================================= */
+
+    .mealprep-auth-page .authentication-wrapper {
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 35px 20px;
+    }
+
+
+    .mealprep-auth-page .authentication-inner {
+        width: 100%;
+        max-width: 430px;
+    }
+
+
+/* =========================================================
+   TARJETA LOGIN
+   ========================================================= */
+
+.mealprep-login-card {
+    width: 100%;
+    border: none !important;
+    border-radius: 24px !important;
+    background-color: rgba(255, 255, 255, 0.97) !important;
+    overflow: hidden;
+    box-shadow: 0 20px 55px rgba(15, 81, 50, 0.16) !important;
+}
+
+
+    /* Línea de colores superior */
+
+    .mealprep-login-card::before {
+        content: "";
+        display: block;
+        width: 100%;
+        height: 6px;
+        background: linear-gradient( 90deg, #0F5132 0%, #168C55 35%, #75C843 70%, #FF8A1F 100% );
+    }
+
+
+    /* Contenido de la tarjeta */
+
+    .mealprep-login-card .card-body {
+        padding: 32px 38px 30px;
+    }
+
+
+/* =========================================================
+   LOGO MEALPREP
+   ========================================================= */
+
+.mealprep-login-brand {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+
+    .mealprep-login-brand a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        text-decoration: none;
+    }
+
+
+
+.mealprep-login-logo {
+    display: block !important;
+    width: 190px !important;
+    max-width: 190px !important;
+    height: 105px !important;
+    object-fit: contain !important;
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   BIENVENIDA
+   ========================================================= */
+
+.mealprep-login-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+
+    .mealprep-login-header h4 {
+        color: var(--mealprep-green-dark);
+        font-size: 1.45rem;
+        font-weight: 700;
+        margin-bottom: 7px;
+    }
+
+
+    .mealprep-login-header p {
+        color: var(--mealprep-muted);
+        font-size: 0.92rem;
+        margin-bottom: 0;
+    }
+
+
+/* =========================================================
+   LABELS
+   ========================================================= */
+
+.mealprep-login-card .form-label {
+    color: #315B46;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.025rem;
+    margin-bottom: 7px;
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+.mealprep-login-card .form-control {
+    min-height: 44px;
+    border: 1px solid #D7E8DC !important;
+    border-radius: 10px;
+    color: var(--mealprep-text);
+    background-color: #FFFFFF;
+    padding: 10px 13px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+    .mealprep-login-card .form-control::placeholder {
+        color: #A5B4AB;
+    }
+
+
+    .mealprep-login-card .form-control:focus {
+        border-color: var(--mealprep-green) !important;
+        box-shadow: 0 0 0 0.18rem rgba(22, 140, 85, 0.13) !important;
+    }
+
+
+/* =========================================================
+   CONTRASEÑA
+   ========================================================= */
+
+.mealprep-login-card .input-group {
+    border-radius: 10px;
+}
+
+
+.mealprep-login-card .input-group-text {
+    border-color: #D7E8DC !important;
+    background-color: #FFFFFF !important;
+    color: #668071;
+    border-radius: 0 10px 10px 0;
+}
+
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+.mealprep-auth-link {
+    color: var(--mealprep-green) !important;
+    font-weight: 600;
+    text-decoration: none !important;
+    transition: color 0.2s ease;
+}
+
+
+    .mealprep-auth-link:hover {
+        color: var(--mealprep-green-dark) !important;
+    }
+
+
+/* =========================================================
+   CHECKBOX
+   ========================================================= */
+
+.mealprep-login-card .form-check-label {
+    color: var(--mealprep-muted);
+}
+
+
+.mealprep-login-card .form-check-input {
+    border-color: #BBD7C5;
+}
+
+
+    .mealprep-login-card .form-check-input:checked {
+        background-color: var(--mealprep-green) !important;
+        border-color: var(--mealprep-green) !important;
+    }
+
+
+    .mealprep-login-card .form-check-input:focus {
+        border-color: var(--mealprep-green);
+        box-shadow: 0 0 0 0.18rem rgba(22, 140, 85, 0.13);
+    }
+
+
+/* =========================================================
+   BOTÓN
+   ========================================================= */
+
+.mealprep-login-submit {
+    min-height: 45px;
+    background: linear-gradient( 135deg, #168C55, #2FBF71 ) !important;
+    border: none !important;
+    border-radius: 10px;
+    color: #FFFFFF !important;
+    font-weight: 600;
+    box-shadow: 0 7px 18px rgba(22, 140, 85, 0.20);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+    .mealprep-login-submit:hover {
+        color: #FFFFFF !important;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 24px rgba(22, 140, 85, 0.28);
+    }
+
+
+/* =========================================================
+   CREAR CUENTA
+   ========================================================= */
+
+.mealprep-register-text {
+    color: var(--mealprep-muted);
+    font-size: 0.9rem;
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 575.98px) {
+
+    .mealprep-auth-page {
+        background-position: center center;
+    }
+
+        .mealprep-auth-page .authentication-wrapper {
+            padding: 20px 15px;
+        }
+
+    .mealprep-login-card .card-body {
+        padding: 27px 23px 25px;
+    }
+
+    .mealprep-login-logo {
+        width: 165px !important;
+        max-width: 165px !important;
+        height: 90px !important;
+    }
+
+    .mealprep-login-header h4 {
+        font-size: 1.3rem;
+    }
+}
+

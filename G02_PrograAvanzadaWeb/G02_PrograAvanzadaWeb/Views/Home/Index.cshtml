@@ -2,51 +2,155 @@
     ViewData["Title"] = "Página principal";
 }
 
-<div class="row">
+<!-- ============================= -->
+<!-- PRESENTACIÓN -->
+<!-- ============================= -->
 
-    <!-- Tarjeta principal -->
-    <div class="col-lg-8 mb-4 order-0">
+<section class="mealprep-hero mb-4">
 
-        <div class="card">
+    <div class="mealprep-hero-overlay"></div>
 
-            <div class="d-flex align-items-end row">
+    <div class="mealprep-hero-content">
 
-                <div class="col-sm-7">
+        <span class="mealprep-badge">
+            Planifica • Cocina • Disfruta
+        </span>
 
-                    <div class="card-body">
+        <h1 class="mealprep-title mt-3">
+            Organiza tus comidas,
+            <span>disfruta tu semana.</span>
+        </h1>
 
-                        <h5 class="card-title text-primary">
-                            Congratulations John! 🎉
-                        </h5>
+        <p class="mealprep-description">
+            Planifica tu alimentación semanal, organiza tus recetas
+            favoritas y genera tu lista de compras de una forma
+            sencilla y práctica.
+        </p>
 
-                        <p class="mb-4">
-                            You have done
-                            <span class="fw-bold">72%</span>
-                            more sales today.
-                            Check your new badge in your profile.
-                        </p>
+        <div class="d-flex flex-wrap gap-2 mt-4">
 
-                        <a href="javascript:void(0);"
-                           class="btn btn-sm btn-outline-primary">
-                            View Badges
-                        </a>
+            <a asp-controller="Cuenta"
+               asp-action="Registro"
+               class="btn btn-primary btn-lg">
 
+                Comenzar ahora
+                <i class="bx bx-right-arrow-alt ms-1"></i>
+
+            </a>
+
+            <a href="#funcionalidades"
+               class="btn btn-outline-primary btn-lg mealprep-more-btn">
+
+                Conocer más
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ============================= -->
+<!-- FUNCIONALIDADES PRINCIPALES -->
+<!-- ============================= -->
+
+<section id="funcionalidades" class="py-4">
+
+    <div class="text-center mb-4">
+
+        <span class="mealprep-section-label">
+            TODO EN UN SOLO LUGAR
+        </span>
+
+        <h2 class="mealprep-section-title">
+            Organizar tu semana puede ser más fácil
+        </h2>
+
+        <p class="text-muted">
+            MealPrep reúne las herramientas que necesitas para
+            planificar tus comidas sin complicaciones.
+        </p>
+
+    </div>
+
+
+    <div class="row g-4">
+
+        <!-- Planificador -->
+        <div class="col-lg-4 col-md-6">
+
+            <div class="card mealprep-feature-card mealprep-card-plan h-100">
+
+                <div class="card-body">
+
+                    <div class="mealprep-icon mealprep-icon-green">
+                        <i class="bx bx-calendar"></i>
                     </div>
+
+                    <h4 class="mt-3">
+                        Planifica tu semana
+                    </h4>
+
+                    <p class="text-muted mb-0">
+                        Organiza desayunos, almuerzos, cenas y snacks
+                        para cada día de la semana.
+                    </p>
 
                 </div>
 
+            </div>
 
-                <div class="col-sm-5 text-center text-sm-left">
+        </div>
 
-                    <div class="card-body pb-0 px-0 px-md-4">
 
-                        <img src="~/img/illustrations/man-with-laptop-light.png"
-                             height="140"
-                             alt="Usuario"
-                             data-app-dark-img="illustrations/man-with-laptop-dark.png"
-                             data-app-light-img="illustrations/man-with-laptop-light.png" />
+        <!-- Recetas -->
+        <div class="col-lg-4 col-md-6">
 
+            <div class="card mealprep-feature-card mealprep-card-recipes h-100">
+
+                <div class="card-body">
+
+                    <div class="mealprep-icon mealprep-icon-orange">
+                        <i class="bx bx-dish"></i>
                     </div>
+
+                    <h4 class="mt-3">
+                        Descubre recetas
+                    </h4>
+
+                    <p class="text-muted mb-0">
+                        Encuentra recetas para cada momento del día
+                        y guarda tus favoritas.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Compras -->
+        <div class="col-lg-4 col-md-6">
+
+            <div class="card mealprep-feature-card mealprep-card-shopping h-100">
+
+                <div class="card-body">
+
+                    <div class="mealprep-icon mealprep-icon-yellow">
+                        <i class="bx bx-cart"></i>
+                    </div>
+
+                    <h4 class="mt-3">
+                        Genera tu lista de compras
+                    </h4>
+
+                    <p class="text-muted mb-0">
+                        Obtén automáticamente los ingredientes que
+                        necesitas según las comidas que planificaste.
+                    </p>
 
                 </div>
 
@@ -56,135 +160,151 @@
 
     </div>
 
+</section>
 
-    <!-- Tarjetas pequeñas -->
-    <div class="col-lg-4 col-md-4 order-1">
+<!-- ============================= -->
+<!-- DESCUBRE MEALPREP -->
+<!-- ============================= -->
 
-        <div class="row">
+<section class="mealprep-discover py-4">
 
-            <!-- Profit -->
-            <div class="col-lg-6 col-md-12 col-6 mb-4">
+    <div class="row align-items-center g-4">
 
-                <div class="card">
+        <div class="col-lg-5">
 
-                    <div class="card-body">
+            <span class="mealprep-section-label">
+                PENSADO PARA TU DÍA A DÍA
+            </span>
 
-                        <div class="card-title d-flex align-items-start justify-content-between">
+            <h2 class="mealprep-section-title text-start">
+                Menos tiempo pensando,
+                <span>más tiempo disfrutando.</span>
+            </h2>
 
-                            <div class="avatar flex-shrink-0">
+            <p class="mealprep-discover-text">
+                MealPrep te ayuda a tener claro qué vas a preparar durante
+                la semana, qué ingredientes necesitas y qué recetas puedes
+                incluir en tu planificación.
+            </p>
 
-                                <img src="~/img/icons/unicons/chart-success.png"
-                                     alt="Profit"
-                                     class="rounded" />
+            <div class="mealprep-benefit">
+                <i class="bx bx-check-circle"></i>
+                <span>Organiza tus comidas con anticipación.</span>
+            </div>
 
-                            </div>
+            <div class="mealprep-benefit">
+                <i class="bx bx-check-circle"></i>
+                <span>Encuentra inspiración para cada momento del día.</span>
+            </div>
+
+            <div class="mealprep-benefit">
+                <i class="bx bx-check-circle"></i>
+                <span>Compra únicamente lo que necesitas.</span>
+            </div>
+
+        </div>
+
+        <div class="col-lg-7">
+
+            <div class="mealprep-photo-grid">
+
+                <img src="~/img/comida-saludable.jpg"
+                     alt="Comida saludable"
+                     class="mealprep-photo mealprep-photo-main" />
+
+                <img src="~/img/comida.jpg"
+                     alt="Ingredientes para MealPrep"
+                     class="mealprep-photo mealprep-photo-small" />
+
+                <img src="~/img/vegetales.jpg"
+                     alt="Vegetales frescos"
+                     class="mealprep-photo mealprep-photo-small" />
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ============================= -->
+<!-- CÓMO FUNCIONA -->
+<!-- ============================= -->
+
+<section class="mealprep-how mt-4 mb-4">
+
+    <div class="row align-items-center">
+
+        <div class="col-lg-5 text-center mb-4 mb-lg-0">
+
+            <img src="~/img/MealPrep_logo_completo.png"
+                 alt="MealPrep - Planifica, cocina y disfruta"
+                 class="img-fluid mealprep-full-logo" />
+
+        </div>
 
 
-                            <div class="dropdown">
+        <div class="col-lg-7">
 
-                                <button class="btn p-0"
-                                        type="button"
-                                        data-bs-toggle="dropdown">
+            <span class="mealprep-section-label">
+                ASÍ DE SENCILLO
+            </span>
 
-                                    <i class="bx bx-dots-vertical-rounded"></i>
-
-                                </button>
-
-                                <div class="dropdown-menu dropdown-menu-end">
-
-                                    <a class="dropdown-item"
-                                       href="javascript:void(0);">
-                                        View More
-                                    </a>
-
-                                </div>
-
-                            </div>
-
-                        </div>
+            <h2 class="mealprep-section-title text-start">
+                Tu semana organizada en pocos pasos
+            </h2>
 
 
-                        <span class="fw-semibold d-block mb-1">
-                            Profit
-                        </span>
+            <div class="mealprep-step">
 
-                        <h3 class="card-title mb-2">
-                            $12,628
-                        </h3>
+                <div class="mealprep-step-number">
+                    1
+                </div>
 
-                        <small class="text-success fw-semibold">
+                <div>
+                    <h5>Elige tus recetas</h5>
 
-                            <i class="bx bx-up-arrow-alt"></i>
-                            +72.80%
-
-                        </small>
-
-                    </div>
-
+                    <p>
+                        Explora el recetario y encuentra las comidas
+                        que quieres preparar.
+                    </p>
                 </div>
 
             </div>
 
 
-            <!-- Sales -->
-            <div class="col-lg-6 col-md-12 col-6 mb-4">
+            <div class="mealprep-step">
 
-                <div class="card">
+                <div class="mealprep-step-number">
+                    2
+                </div>
 
-                    <div class="card-body">
+                <div>
+                    <h5>Organiza tu semana</h5>
 
-                        <div class="card-title d-flex align-items-start justify-content-between">
+                    <p>
+                        Asigna cada receta al día y momento
+                        que prefieras.
+                    </p>
+                </div>
 
-                            <div class="avatar flex-shrink-0">
-
-                                <img src="~/img/icons/unicons/wallet-info.png"
-                                     alt="Sales"
-                                     class="rounded" />
-
-                            </div>
-
-
-                            <div class="dropdown">
-
-                                <button class="btn p-0"
-                                        type="button"
-                                        data-bs-toggle="dropdown">
-
-                                    <i class="bx bx-dots-vertical-rounded"></i>
-
-                                </button>
-
-                                <div class="dropdown-menu dropdown-menu-end">
-
-                                    <a class="dropdown-item"
-                                       href="javascript:void(0);">
-                                        View More
-                                    </a>
-
-                                </div>
-
-                            </div>
-
-                        </div>
+            </div>
 
 
-                        <span>
-                            Sales
-                        </span>
+            <div class="mealprep-step">
 
-                        <h3 class="card-title text-nowrap mb-1">
-                            $4,679
-                        </h3>
+                <div class="mealprep-step-number">
+                    3
+                </div>
 
-                        <small class="text-success fw-semibold">
+                <div>
+                    <h5>Prepara tus compras</h5>
 
-                            <i class="bx bx-up-arrow-alt"></i>
-                            +28.42%
-
-                        </small>
-
-                    </div>
-
+                    <p>
+                        Genera tu lista de compras automáticamente
+                        y empieza a cocinar.
+                    </p>
                 </div>
 
             </div>
@@ -193,4 +313,34 @@
 
     </div>
 
-</div>
+</section>
+
+
+<!-- ============================= -->
+<!-- LLAMADO FINAL -->
+<!-- ============================= -->
+
+<section class="mealprep-cta text-center">
+
+    <img src="~/img/Logo.png"
+         alt="MealPrep"
+         class="mealprep-cta-logo" />
+
+    <h2>
+        ¿Listo para organizar tu semana?
+    </h2>
+
+    <p>
+        Crea tu cuenta y comienza a planificar tus comidas
+        de una forma sencilla.
+    </p>
+
+    <a asp-controller="Cuenta"
+       asp-action="Registro"
+       class="btn btn-primary btn-lg">
+
+        Crear mi cuenta
+
+    </a>
+
+</section>
