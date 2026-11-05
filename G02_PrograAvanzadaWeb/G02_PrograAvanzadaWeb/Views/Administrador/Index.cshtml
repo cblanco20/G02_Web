@@ -1,0 +1,538 @@
+﻿@{
+    ViewData["Title"] = "Panel de Administración";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    var nombreAdministrador = Context.Session.GetString("Nombre") ?? "Administrador";
+}
+
+<div class="mealprep-dashboard">
+
+    <!-- ====================================== -->
+    <!-- BIENVENIDA DEL ADMINISTRADOR -->
+    <!-- ====================================== -->
+
+    <div class="mp-bienvenida mb-4">
+
+        <div class="row align-items-center g-4">
+
+            <div class="col-lg-8">
+
+                <span class="mp-bienvenida-etiqueta mb-3">
+                    <i class="bx bx-shield-quarter me-1"></i>
+                    PANEL ADMINISTRATIVO
+                </span>
+
+                <h2 class="mp-bienvenida-titulo mt-3 mb-2">
+                    ¡Hola, @nombreAdministrador!
+                </h2>
+
+                <h5 class="mp-bienvenida-subtitulo mb-3">
+                    Bienvenido al centro de administración de MealPrep.
+                </h5>
+
+                <p class="mp-bienvenida-texto mb-4">
+                    Desde aquí podrás gestionar los usuarios,
+                    organizar las recetas, administrar las categorías
+                    y mantener actualizado el catálogo de ingredientes
+                    de nuestra plataforma.
+                </p>
+
+                <span class="mp-bienvenida-boton">
+                    <i class="bx bx-leaf me-2"></i>
+                    Gestiona MealPrep en un solo lugar
+                </span>
+
+            </div>
+
+            <div class="col-lg-4 text-center">
+
+                <div class="mp-comida-circulo">
+                    <img src="~/img/MealPrep_personaje.png"
+                         alt="Mascota de MealPrep"
+                         class="mp-comida-imagen" />
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ====================================== -->
+    <!-- RESUMEN GENERAL -->
+    <!-- ====================================== -->
+
+    <div class="mp-seccion-encabezado mb-3">
+
+        <div>
+            <h4 class="mp-titulo-seccion">
+                Resumen general
+            </h4>
+
+            <p class="text-muted mb-0">
+                Consulta rápidamente la información principal del sistema.
+            </p>
+        </div>
+
+        <span class="mp-etiqueta-demo">
+            Datos de demostración
+        </span>
+
+    </div>
+
+    <div class="row g-3 mb-4">
+
+        <!-- USUARIOS -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card mp-resumen-card">
+
+                <div class="card-body">
+
+                    <div class="mp-resumen-icono">
+                        <i class="bx bx-group"></i>
+                    </div>
+
+                    <h3 class="mp-resumen-numero">
+                        24
+                    </h3>
+
+                    <p class="mp-resumen-titulo mb-2">
+                        Usuarios registrados
+                    </p>
+
+                    <p class="mp-resumen-descripcion">
+                        Personas registradas en MealPrep.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- RECETAS -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card mp-resumen-card">
+
+                <div class="card-body">
+
+                    <div class="mp-resumen-icono">
+                        <i class="bx bx-book-open"></i>
+                    </div>
+
+                    <h3 class="mp-resumen-numero">
+                        18
+                    </h3>
+
+                    <p class="mp-resumen-titulo mb-2">
+                        Recetas disponibles
+                    </p>
+
+                    <p class="mp-resumen-descripcion">
+                        Recetas del catálogo de MealPrep.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- CATEGORÍAS -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card mp-resumen-card">
+
+                <div class="card-body">
+
+                    <div class="mp-resumen-icono">
+                        <i class="bx bx-category"></i>
+                    </div>
+
+                    <h3 class="mp-resumen-numero">
+                        6
+                    </h3>
+
+                    <p class="mp-resumen-titulo mb-2">
+                        Categorías
+                    </p>
+
+                    <p class="mp-resumen-descripcion">
+                        Clasificaciones de las recetas.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- INGREDIENTES -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card mp-resumen-card">
+
+                <div class="card-body">
+
+                    <div class="mp-resumen-icono">
+                        <i class="bx bx-package"></i>
+                    </div>
+
+                    <h3 class="mp-resumen-numero">
+                        35
+                    </h3>
+
+                    <p class="mp-resumen-titulo mb-2">
+                        Ingredientes
+                    </p>
+
+                    <p class="mp-resumen-descripcion">
+                        Ingredientes registrados en el catálogo.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ====================================== -->
+    <!-- INFORMACIÓN GENERAL -->
+    <!-- ====================================== -->
+
+    <div class="row g-3 mb-4">
+
+        <!-- RECETAS DEL CATÁLOGO -->
+        <div class="col-lg-8">
+
+            <div class="card mp-panel-card h-100">
+
+                <div class="mp-panel-header">
+
+                    <div>
+
+                        <h5 class="mp-titulo-panel">
+                            <i class="bx bx-book-open me-2"></i>
+                            Recetas del catálogo
+                        </h5>
+
+                        <small class="text-muted">
+                            Ejemplos de recetas disponibles en MealPrep.
+                        </small>
+
+                    </div>
+
+                    <span class="mp-etiqueta-demo">
+                        Vista previa
+                    </span>
+
+                </div>
+
+                <div class="card-body">
+
+                    <!-- RECETA 1 -->
+                    <div class="mp-comida-fila">
+
+                        <img src="~/img/comida-saludable.jpg"
+                             alt="Pollo con vegetales"
+                             class="mp-comida-miniatura" />
+
+                        <div class="flex-grow-1">
+
+                            <div class="mp-tipo-comida">
+                                ALMUERZO
+                            </div>
+
+                            <div class="fw-semibold">
+                                Pollo con vegetales
+                            </div>
+
+                            <small class="text-muted">
+                                Una opción saludable y completa.
+                            </small>
+
+                        </div>
+
+                        <i class="bx bx-check-circle mp-comida-icono"></i>
+
+                    </div>
+
+                    <!-- RECETA 2 -->
+                    <div class="mp-comida-fila">
+
+                        <img src="~/img/Bowl.png"
+                             alt="Bowl saludable"
+                             class="mp-comida-miniatura" />
+
+                        <div class="flex-grow-1">
+
+                            <div class="mp-tipo-comida">
+                                COMIDA SALUDABLE
+                            </div>
+
+                            <div class="fw-semibold">
+                                Bowl de vegetales
+                            </div>
+
+                            <small class="text-muted">
+                                Una combinación de ingredientes frescos.
+                            </small>
+
+                        </div>
+
+                        <i class="bx bx-check-circle mp-comida-icono"></i>
+
+                    </div>
+
+                    <!-- RECETA 3 -->
+                    <div class="mp-comida-fila">
+
+                        <img src="~/img/comida.jpg"
+                             alt="Ensalada saludable"
+                             class="mp-comida-miniatura" />
+
+                        <div class="flex-grow-1">
+
+                            <div class="mp-tipo-comida">
+                                CENA
+                            </div>
+
+                            <div class="fw-semibold">
+                                Ensalada de vegetales
+                            </div>
+
+                            <small class="text-muted">
+                                Una alternativa fresca y ligera.
+                            </small>
+
+                        </div>
+
+                        <i class="bx bx-check-circle mp-comida-icono"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ESTADO DEL SISTEMA -->
+        <div class="col-lg-4">
+
+            <div class="card mp-panel-card h-100">
+
+                <div class="mp-panel-header">
+
+                    <div>
+
+                        <h5 class="mp-titulo-panel">
+                            <i class="bx bx-shield-quarter me-2"></i>
+                            Mi administración
+                        </h5>
+
+                        <small class="text-muted">
+                            Información de tu acceso.
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="text-center mb-4">
+
+                        <img src="~/img/avatars/1.png"
+                             alt="Administrador"
+                             class="mp-navbar-avatar mb-3"
+                             style="width: 76px; height: 76px;" />
+
+                        <h5 class="mb-1">
+                            @nombreAdministrador
+                        </h5>
+
+                        <span class="badge bg-label-success">
+                            Administrador
+                        </span>
+
+                    </div>
+
+                    <hr />
+
+                    <div class="d-flex justify-content-between mb-3">
+
+                        <span class="text-muted">
+                            <i class="bx bx-user me-1"></i>
+                            Rol
+                        </span>
+
+                        <span class="fw-semibold">
+                            Administrador
+                        </span>
+
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-3">
+
+                        <span class="text-muted">
+                            <i class="bx bx-lock me-1"></i>
+                            Acceso
+                        </span>
+
+                        <span class="text-success fw-semibold">
+                            Autenticado
+                        </span>
+
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+
+                        <span class="text-muted">
+                            <i class="bx bx-check-circle me-1"></i>
+                            Sesión
+                        </span>
+
+                        <span class="text-success fw-semibold">
+                            Activa
+                        </span>
+
+                    </div>
+
+                    <hr />
+
+                    <p class="small text-muted mb-0">
+                        Tu cuenta cuenta con permisos de administrador
+                        para acceder a las funciones de gestión
+                        de MealPrep.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ====================================== -->
+    <!-- ACCESOS RÁPIDOS -->
+    <!-- ====================================== -->
+
+    <div class="mb-3">
+
+        <h4 class="mp-titulo-seccion">
+            Accesos rápidos
+        </h4>
+
+        <p class="text-muted mb-0">
+            Herramientas para administrar la información de MealPrep.
+        </p>
+
+    </div>
+
+    <div class="row g-3 mb-4">
+
+        <!-- USUARIOS -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="mp-acceso-card">
+
+                <div class="mp-acceso-icono">
+                    <i class="bx bx-group"></i>
+                </div>
+
+                <h6>Gestionar usuarios</h6>
+
+                <p>
+                    Consulta los usuarios registrados
+                    y administra su estado.
+                </p>
+
+                <span class="mp-acceso-pendiente">
+                    Próximamente
+                </span>
+
+            </div>
+
+        </div>
+
+        <!-- RECETAS -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="mp-acceso-card">
+
+                <div class="mp-acceso-icono">
+                    <i class="bx bx-book-open"></i>
+                </div>
+
+                <h6>Gestionar recetas</h6>
+
+                <p>
+                    Registra, consulta y actualiza
+                    las recetas del catálogo.
+                </p>
+
+                <span class="mp-acceso-pendiente">
+                    Próximamente
+                </span>
+
+            </div>
+
+        </div>
+
+        <!-- CATEGORÍAS -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="mp-acceso-card">
+
+                <div class="mp-acceso-icono">
+                    <i class="bx bx-category"></i>
+                </div>
+
+                <h6>Categorías</h6>
+
+                <p>
+                    Organiza las categorías utilizadas
+                    para clasificar las recetas.
+                </p>
+
+                <span class="mp-acceso-pendiente">
+                    Próximamente
+                </span>
+
+            </div>
+
+        </div>
+
+        <!-- INGREDIENTES -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="mp-acceso-card">
+
+                <div class="mp-acceso-icono">
+                    <i class="bx bx-package"></i>
+                </div>
+
+                <h6>Ingredientes</h6>
+
+                <p>
+                    Mantén actualizado el catálogo
+                    de ingredientes de MealPrep.
+                </p>
+
+                <span class="mp-acceso-pendiente">
+                    Próximamente
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

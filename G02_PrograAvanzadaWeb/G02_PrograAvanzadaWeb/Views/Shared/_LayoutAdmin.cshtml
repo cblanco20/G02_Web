@@ -1,0 +1,374 @@
+﻿@{
+    var nombreAdministrador = Context.Session.GetString("Nombre") ?? "Administrador";
+    var controladorActual = ViewContext.RouteData.Values["controller"]?.ToString();
+    var accionActual = ViewContext.RouteData.Values["action"]?.ToString();
+
+    var esInicio = controladorActual == "Administrador" && accionActual == "Index";
+}
+
+<!DOCTYPE html>
+<html lang="es"
+      class="light-style layout-menu-fixed"
+      dir="ltr"
+      data-theme="theme-default"
+      data-assets-path="/"
+      data-template="vertical-menu-template-free">
+
+<head>
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewData["Title"] - MealPrep</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="~/img/Logo.png" />
+
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+          rel="stylesheet" />
+
+    <!-- Iconos -->
+    <link rel="stylesheet" href="~/fonts/boxicons.css" />
+
+    <!-- Sneat -->
+    <link rel="stylesheet" href="~/css/core.css" />
+    <link rel="stylesheet" href="~/css/theme-default.css" />
+    <link rel="stylesheet" href="~/css/demo.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/lib/perfect-scrollbar/perfect-scrollbar.css" />
+
+    <!-- Scripts de configuración -->
+    <script src="~/js/helpers.js"></script>
+    <script src="~/js/config.js"></script>
+</head>
+
+<body>
+
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+
+            <!-- ===================================== -->
+            <!-- MENÚ LATERAL DEL ADMINISTRADOR -->
+            <!-- ===================================== -->
+
+            <aside id="layout-menu"
+                   class="layout-menu menu-vertical menu bg-menu-theme">
+
+                <!-- Logo -->
+                <div class="app-brand demo mealprep-brand">
+
+                    <a asp-controller="Administrador"
+                       asp-action="Index"
+                       class="app-brand-link mealprep-brand-link">
+
+                        <img src="~/img/Logo.png"
+                             alt="MealPrep"
+                             class="mealprep-menu-logo" />
+
+                        <span class="mealprep-brand-name">
+                            <span class="mealprep-brand-meal">Meal</span><span class="mealprep-brand-prep">Prep</span>
+                        </span>
+
+                    </a>
+
+                    <a href="javascript:void(0);"
+                       class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+
+                        <i class="bx bx-chevron-left bx-sm align-middle"></i>
+
+                    </a>
+
+                </div>
+
+                <div class="menu-inner-shadow"></div>
+
+                <ul class="menu-inner py-1">
+
+                    <!-- SECCIÓN PRINCIPAL -->
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">Administración</span>
+                    </li>
+
+                    <li class="menu-item @(esInicio ? "active" : "")">
+
+                        <a asp-controller="Administrador"
+                           asp-action="Index"
+                           class="menu-link">
+
+                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+
+                            <div>Inicio</div>
+
+                        </a>
+
+                    </li>
+
+                    <!-- GESTIÓN DE USUARIOS -->
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">Gestión de usuarios</span>
+                    </li>
+
+                    <li class="menu-item">
+
+                        <a href="#"
+                           class="menu-link"
+                           title="Próximamente">
+
+                            <i class="menu-icon tf-icons bx bx-group"></i>
+
+                            <div>Usuarios registrados</div>
+
+                        </a>
+
+                    </li>
+
+                    <!-- GESTIÓN DEL RECETARIO -->
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">Gestión de recetas</span>
+                    </li>
+
+                    <li class="menu-item">
+
+                        <a href="#"
+                           class="menu-link"
+                           title="Próximamente">
+
+                            <i class="menu-icon tf-icons bx bx-book-open"></i>
+
+                            <div>Recetas</div>
+
+                        </a>
+
+                    </li>
+
+                    <li class="menu-item">
+
+                        <a href="#"
+                           class="menu-link"
+                           title="Próximamente">
+
+                            <i class="menu-icon tf-icons bx bx-category"></i>
+
+                            <div>Categorías</div>
+
+                        </a>
+
+                    </li>
+
+                    <li class="menu-item">
+
+                        <a href="#"
+                           class="menu-link"
+                           title="Próximamente">
+
+                            <i class="menu-icon tf-icons bx bx-food-menu"></i>
+
+                            <div>Ingredientes</div>
+
+                        </a>
+
+                    </li>
+
+                    <!-- CONTROL DEL SISTEMA -->
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">Control del sistema</span>
+                    </li>
+
+                    <li class="menu-item">
+
+                        <a href="#"
+                           class="menu-link"
+                           title="Próximamente">
+
+                            <i class="menu-icon tf-icons bx bx-error-circle"></i>
+
+                            <div>Registro de errores</div>
+
+                        </a>
+
+                    </li>
+
+                    <!-- CUENTA -->
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">Mi cuenta</span>
+                    </li>
+
+                    <li class="menu-item">
+
+                        <a href="#"
+                           class="menu-link"
+                           title="Próximamente">
+
+                            <i class="menu-icon tf-icons bx bx-user-circle"></i>
+
+                            <div>Mi perfil</div>
+
+                        </a>
+
+                    </li>
+
+                    <li class="menu-item">
+
+                        <form asp-controller="Cuenta"
+                              asp-action="CerrarSesion"
+                              method="post">
+
+                            @Html.AntiForgeryToken()
+
+                            <button type="submit"
+                                    class="menu-link border-0 bg-transparent w-100 text-start">
+
+                                <i class="menu-icon tf-icons bx bx-log-out"></i>
+
+                                <div>Cerrar sesión</div>
+
+                            </button>
+
+                        </form>
+
+                    </li>
+
+                </ul>
+
+            </aside>
+
+            <!-- ===================================== -->
+            <!-- CONTENIDO PRINCIPAL -->
+            <!-- ===================================== -->
+
+            <div class="layout-page">
+
+                <!-- BARRA SUPERIOR -->
+                <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+                     id="layout-navbar">
+
+                    <!-- Botón responsive -->
+                    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+
+                        <a class="nav-item nav-link px-0 me-xl-4"
+                           href="javascript:void(0)">
+
+                            <i class="bx bx-menu bx-sm"></i>
+
+                        </a>
+
+                    </div>
+
+                    <div class="navbar-nav-right d-flex align-items-center w-100">
+
+                        <!-- Identificación del panel -->
+                        <div class="navbar-nav align-items-center">
+
+                            <div class="nav-item d-flex align-items-center">
+
+                                <i class="bx bx-shield-quarter fs-4 text-success me-2"></i>
+
+                                <span class="fw-semibold">
+                                    Panel de Administración
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Perfil del administrador -->
+                        <ul class="navbar-nav flex-row align-items-center ms-auto">
+
+                            <li class="nav-item">
+
+                                <div class="mp-navbar-perfil">
+
+                                    <div class="text-end">
+
+                                        <div class="mp-navbar-rol">
+                                            Administrador
+                                        </div>
+
+                                        <div class="mp-navbar-nombre">
+                                            @nombreAdministrador
+                                        </div>
+
+                                    </div>
+
+                                    <img src="~/img/avatars/1.png"
+                                         alt="Perfil del administrador"
+                                         class="mp-navbar-avatar" />
+
+                                </div>
+
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                </nav>
+
+                <!-- ===================================== -->
+                <!-- CONTENIDO DE CADA VISTA -->
+                <!-- ===================================== -->
+
+                <div class="content-wrapper">
+
+                    <div class="container-xxl flex-grow-1 container-p-y">
+
+                        @RenderBody()
+
+                    </div>
+
+                    <!-- FOOTER -->
+                    <footer class="content-footer footer bg-footer-theme">
+
+                        <div class="container-xxl py-3">
+
+                            <div class="d-flex flex-wrap justify-content-between align-items-center">
+
+                                <span class="text-muted">
+                                    © @DateTime.Now.Year MealPrep
+                                </span>
+
+                                <span class="text-muted">
+                                    Planifica • Cocina • Disfruta
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </footer>
+
+                    <div class="content-backdrop fade"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="layout-overlay layout-menu-toggle"></div>
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- SCRIPTS -->
+    <!-- ===================================== -->
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/popper/popper.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="~/js/menu.js"></script>
+    <script src="~/js/main.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

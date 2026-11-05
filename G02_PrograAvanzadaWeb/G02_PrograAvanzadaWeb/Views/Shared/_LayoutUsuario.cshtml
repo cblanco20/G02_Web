@@ -1,0 +1,246 @@
+﻿@{
+    var nombreUsuario = Context.Session.GetString("Nombre") ?? "Usuario";
+}
+
+<!DOCTYPE html>
+<html lang="es"
+      class="light-style layout-menu-fixed"
+      dir="ltr"
+      data-theme="theme-default"
+      data-assets-path="/"
+      data-template="vertical-menu-template-free">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewData["Title"] - MealPrep</title>
+
+    <link rel="icon" type="image/png" href="~/img/Logo.png" />
+
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      rel="stylesheet" />
+
+    <!-- Iconos -->
+    <link rel="stylesheet" href="~/fonts/boxicons.css" />
+
+    <!-- Sneat -->
+    <link rel="stylesheet" href="~/css/core.css" />
+    <link rel="stylesheet" href="~/css/theme-default.css" />
+    <link rel="stylesheet" href="~/css/demo.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/lib/perfect-scrollbar/perfect-scrollbar.css" />
+
+    <script src="~/js/helpers.js"></script>
+    <script src="~/js/config.js"></script>
+</head>
+
+<body>
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+
+            <!-- MENÚ LATERAL -->
+            <aside id="layout-menu"
+                   class="layout-menu menu-vertical menu bg-menu-theme">
+
+                <!-- Logo -->
+                <div class="app-brand demo mealprep-brand">
+                    <a asp-controller="Usuario"
+                       asp-action="Index"
+                       class="app-brand-link mealprep-brand-link">
+
+                        <img src="~/img/Logo.png"
+                             alt="MealPrep"
+                             class="mealprep-menu-logo" />
+
+                        <span class="mealprep-brand-name">
+                            <span class="mealprep-brand-meal">Meal</span><span class="mealprep-brand-prep">Prep</span>
+                        </span>
+                    </a>
+
+                    <a href="javascript:void(0);"
+                       class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+                        <i class="bx bx-chevron-left bx-sm align-middle"></i>
+                    </a>
+                </div>
+
+                <div class="menu-inner-shadow"></div>
+
+                <ul class="menu-inner py-1">
+
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">Mi espacio</span>
+                    </li>
+
+                    <li class="menu-item active">
+                        <a asp-controller="Usuario"
+                           asp-action="Index"
+                           class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                            <div>Inicio</div>
+                        </a>
+                    </li>
+
+                    <li class="menu-item">
+                        <a href="#" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-book-open"></i>
+                            <div>Explorar recetas</div>
+                        </a>
+                    </li>
+
+                    <li class="menu-item">
+                        <a href="#" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-heart"></i>
+                            <div>Mis favoritos</div>
+                        </a>
+                    </li>
+
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">Mi organización</span>
+                    </li>
+
+                    <li class="menu-item">
+                        <a href="#" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-calendar"></i>
+                            <div>Planificación semanal</div>
+                        </a>
+                    </li>
+
+                    <li class="menu-item">
+                        <a href="#" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-package"></i>
+                            <div>Mi despensa</div>
+                        </a>
+                    </li>
+
+                    <li class="menu-item">
+                        <a href="#" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-cart"></i>
+                            <div>Listas de compras</div>
+                        </a>
+                    </li>
+
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">Mi cuenta</span>
+                    </li>
+
+                    <li class="menu-item">
+                        <a href="#" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-user-circle"></i>
+                            <div>Mi perfil</div>
+                        </a>
+                    </li>
+
+                    <li class="menu-item">
+                        <form asp-controller="Cuenta"
+                              asp-action="CerrarSesion"
+                              method="post">
+                            @Html.AntiForgeryToken()
+
+                            <button type="submit"
+                                    class="menu-link border-0 bg-transparent w-100 text-start">
+                                <i class="menu-icon tf-icons bx bx-log-out"></i>
+                                <div>Cerrar sesión</div>
+                            </button>
+                        </form>
+                    </li>
+
+                </ul>
+            </aside>
+
+            <!-- CONTENIDO PRINCIPAL -->
+            <div class="layout-page">
+
+                <!-- BARRA SUPERIOR -->
+                <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+                     id="layout-navbar">
+
+                    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+                        <a class="nav-item nav-link px-0 me-xl-4"
+                           href="javascript:void(0)">
+                            <i class="bx bx-menu bx-sm"></i>
+                        </a>
+                    </div>
+
+                    <div class="navbar-nav-right d-flex align-items-center w-100">
+
+                        <div class="navbar-nav align-items-center">
+                            <div class="nav-item d-flex align-items-center">
+                                <i class="bx bx-leaf fs-4 text-success me-2"></i>
+                                <span class="fw-semibold">
+                                    Mi espacio MealPrep
+                                </span>
+                            </div>
+                        </div>
+
+                        <ul class="navbar-nav flex-row align-items-center ms-auto">
+                            <li class="nav-item">
+                                <div class="mp-navbar-perfil">
+
+                                     <div class="text-end">
+                                          <div class="mp-navbar-rol">
+                                              Usuario
+                                          </div>
+
+                                          <div class="mp-navbar-nombre">
+                                              @nombreUsuario
+                                          </div>
+                                    </div>
+
+                                    <img src="~/img/avatars/1.png"
+                                         alt="Perfil del usuario"
+                                         class="mp-navbar-avatar" />
+
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>
+                </nav>
+
+                <!-- CONTENIDO DE CADA VISTA -->
+                <div class="content-wrapper">
+
+                    <div class="container-xxl flex-grow-1 container-p-y">
+                        @RenderBody()
+                    </div>
+
+                    <footer class="content-footer footer bg-footer-theme">
+                        <div class="container-xxl py-3">
+                            <div class="d-flex flex-wrap justify-content-between align-items-center">
+                                <span class="text-muted">
+                                    © @DateTime.Now.Year MealPrep
+                                </span>
+                                <span class="text-muted">
+                                    Planifica • Cocina • Disfruta
+                                </span>
+                            </div>
+                        </div>
+                    </footer>
+
+                    <div class="content-backdrop fade"></div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/popper/popper.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="~/js/menu.js"></script>
+    <script src="~/js/main.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

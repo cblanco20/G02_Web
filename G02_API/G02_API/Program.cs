@@ -1,4 +1,5 @@
 using Scalar.AspNetCore;
+using G02_API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,9 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    // Crear el administrador inicial si todavía no existe.
+    InicializadorAdministrador.Inicializar(app.Configuration);
+
     app.MapOpenApi();
     app.MapScalarApiReference();
 }

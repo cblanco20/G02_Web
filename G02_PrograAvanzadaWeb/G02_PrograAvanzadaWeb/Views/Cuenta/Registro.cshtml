@@ -1,164 +1,138 @@
-﻿@{
+﻿@model G02_PrograAvanzadaWeb.Models.RegistroUsuario
+
+@{
     ViewData["Title"] = "Registro";
     Layout = "_LayoutAuth";
 }
 
 <div class="mealprep-auth-page">
-
     <div class="container-xxl">
-
         <div class="authentication-wrapper authentication-basic container-p-y">
-
             <div class="authentication-inner">
-
                 <div class="card mealprep-login-card">
-
                     <div class="card-body">
 
                         <div class="mealprep-login-brand text-center">
-
-                            <a asp-controller="Home"
-                               asp-action="Index">
-
+                            <a asp-controller="Home" asp-action="Index">
                                 <img src="~/img/MealPrep_logo_completo.png"
                                      alt="MealPrep"
                                      class="mealprep-login-logo" />
-
                             </a>
-
                         </div>
 
                         <div class="mealprep-login-header">
-
-                            <h4>
-                                ¡Crea tu cuenta!
-                            </h4>
-
-                            <p>
-                                Regístrate para comenzar a utilizar MealPrep
-                            </p>
-
+                            <h4>¡Crea tu cuenta!</h4>
+                            <p>Regístrate para comenzar a utilizar MealPrep</p>
                         </div>
 
-                        <form id="formAuthentication"
+                        @if (ViewBag.Mensaje != null)
+                        {
+                            <div class="alert alert-danger">
+                                @ViewBag.Mensaje
+                            </div>
+                        }
+
+                        <form asp-controller="Cuenta"
+                              asp-action="Registro"
+                              method="post"
+                              id="formAuthentication"
                               class="mb-3">
 
-                            <div class="mb-3">
+                            @Html.AntiForgeryToken()
 
-                                <label for="username"
+                            <div class="mb-3">
+                                <label asp-for="NombreUsuario"
                                        class="form-label">
                                     Usuario
                                 </label>
 
-                                <input type="text"
+                                <input asp-for="NombreUsuario"
                                        class="form-control mealprep-auth-input"
-                                       id="username"
-                                       name="username"
                                        placeholder="Ingrese su usuario"
                                        autofocus />
 
+                                <span asp-validation-for="NombreUsuario"
+                                      class="text-danger"></span>
                             </div>
 
                             <div class="mb-3">
-
-                                <label for="email"
+                                <label asp-for="Correo"
                                        class="form-label">
                                     Correo electrónico
                                 </label>
 
-                                <input type="text"
+                                <input asp-for="Correo"
+                                       type="email"
                                        class="form-control mealprep-auth-input"
-                                       id="email"
-                                       name="email"
                                        placeholder="Ingrese su correo electrónico" />
 
+                                <span asp-validation-for="Correo"
+                                      class="text-danger"></span>
                             </div>
 
                             <div class="mb-3 form-password-toggle">
-
-                                <label class="form-label"
-                                       for="password">
+                                <label asp-for="Contrasena"
+                                       class="form-label">
                                     Contraseña
                                 </label>
 
                                 <div class="input-group input-group-merge">
-
-                                    <input type="password"
-                                           id="password"
+                                    <input asp-for="Contrasena"
+                                           type="password"
                                            class="form-control mealprep-auth-input"
-                                           name="password"
-                                           placeholder="············"
-                                           aria-describedby="password" />
+                                           placeholder="············" />
 
                                     <span class="input-group-text cursor-pointer">
                                         <i class="bx bx-hide"></i>
                                     </span>
-
                                 </div>
 
+                                <span asp-validation-for="Contrasena"
+                                      class="text-danger"></span>
                             </div>
 
                             <div class="mb-3">
-
                                 <div class="form-check">
-
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           id="terms-conditions"
-                                           name="terms" />
+                                    <input asp-for="AceptaTerminos"
+                                           class="form-check-input"
+                                           type="checkbox" />
 
                                     <label class="form-check-label"
-                                           for="terms-conditions">
-
-                                        Acepto la
-                                        <a href="javascript:void(0);"
-                                           class="mealprep-auth-link">
-                                            política de privacidad y los términos
-                                        </a>
-
+                                           asp-for="AceptaTerminos">
+                                        Acepto la política de privacidad
+                                        y los términos y condiciones
                                     </label>
-
                                 </div>
 
+                                <span asp-validation-for="AceptaTerminos"
+                                      class="text-danger"></span>
                             </div>
 
                             <div class="mb-3">
-
                                 <button class="btn mealprep-login-submit d-grid w-100"
-                                        type="button">
+                                        type="submit">
                                     Registrarse
                                 </button>
-
                             </div>
-
                         </form>
 
                         <p class="text-center mealprep-register-text">
-
-                            <span>
-                                ¿Ya tiene una cuenta?
-                            </span>
+                            <span>¿Ya tiene una cuenta?</span>
 
                             <a asp-controller="Cuenta"
                                asp-action="Login"
                                class="mealprep-auth-link">
-
-                                <span>
-                                    Iniciar sesión
-                                </span>
-
+                                <span>Iniciar sesión</span>
                             </a>
-
                         </p>
 
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
-
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

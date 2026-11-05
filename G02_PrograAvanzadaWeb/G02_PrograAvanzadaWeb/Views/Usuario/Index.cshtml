@@ -1,0 +1,348 @@
+﻿@{
+    ViewData["Title"] = "Mi inicio";
+    Layout = "~/Views/Shared/_LayoutUsuario.cshtml";
+
+    var nombreUsuario = Context.Session.GetString("Nombre") ?? "Usuario";
+}
+
+<div class="mealprep-dashboard">
+
+    <!-- BIENVENIDA -->
+    <section class="mp-bienvenida mb-4">
+        <div class="row align-items-center g-4">
+
+            <div class="col-lg-8">
+                <span class="mp-bienvenida-etiqueta">
+                    <i class="bx bx-leaf me-1"></i>
+                    MI ESPACIO MEALPREP
+                </span>
+
+                <h2 class="mp-bienvenida-titulo mt-3">
+                    ¡Hola, @nombreUsuario!
+                </h2>
+
+                <h4 class="mp-bienvenida-subtitulo">
+                    Organiza tus comidas y disfruta cada día.
+                </h4>
+
+                <p class="mp-bienvenida-texto mt-3">
+                    Descubre nuevas recetas, organiza tu planificación
+                    semanal y lleva el control de tus ingredientes
+                    y listas de compras desde un solo lugar.
+                </p>
+
+                <span class="mp-bienvenida-boton">
+                    <i class="bx bx-calendar me-2"></i>
+                    Mi planificación semanal
+                </span>
+            </div>
+
+            <div class="col-lg-4 text-center">
+                <div class="mp-comida-circulo">
+                    <img src="~/img/comida-saludable.jpg"
+                         alt="Comida saludable"
+                         class="mp-comida-imagen" />
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ENCABEZADO DEL RESUMEN -->
+    <div class="mp-seccion-encabezado mb-3">
+        <div>
+            <h4 class="mp-titulo-seccion">Mi resumen</h4>
+            <p class="text-muted mb-0">
+                Consulta rápidamente tu organización alimenticia.
+            </p>
+        </div>
+
+        <span class="mp-etiqueta-demo">
+            Datos de demostración
+        </span>
+    </div>
+
+    <!-- TARJETAS DE RESUMEN -->
+    <div class="row g-3 mb-4">
+
+        <div class="col-sm-6 col-xl-3">
+            <div class="card mp-resumen-card">
+                <div class="card-body">
+                    <div class="mp-resumen-icono">
+                        <i class="bx bx-heart"></i>
+                    </div>
+
+                    <h3 class="mp-resumen-numero">3</h3>
+                    <h6 class="mp-resumen-titulo">Recetas favoritas</h6>
+                    <p class="mp-resumen-descripcion">
+                        Recetas que has guardado
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-xl-3">
+            <div class="card mp-resumen-card">
+                <div class="card-body">
+                    <div class="mp-resumen-icono">
+                        <i class="bx bx-calendar-check"></i>
+                    </div>
+
+                    <h3 class="mp-resumen-numero">4</h3>
+                    <h6 class="mp-resumen-titulo">Comidas planificadas</h6>
+                    <p class="mp-resumen-descripcion">
+                        En tu planificación semanal
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-xl-3">
+            <div class="card mp-resumen-card">
+                <div class="card-body">
+                    <div class="mp-resumen-icono">
+                        <i class="bx bx-package"></i>
+                    </div>
+
+                    <h3 class="mp-resumen-numero">8</h3>
+                    <h6 class="mp-resumen-titulo">Mi despensa</h6>
+                    <p class="mp-resumen-descripcion">
+                        Ingredientes registrados
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-xl-3">
+            <div class="card mp-resumen-card">
+                <div class="card-body">
+                    <div class="mp-resumen-icono">
+                        <i class="bx bx-cart"></i>
+                    </div>
+
+                    <h3 class="mp-resumen-numero">1</h3>
+                    <h6 class="mp-resumen-titulo">Listas de compras</h6>
+                    <p class="mp-resumen-descripcion">
+                        Listas que has creado
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- PLANIFICACIÓN Y COMPRAS -->
+    <div class="row g-4 mb-4">
+
+        <!-- PLANIFICACIÓN -->
+        <div class="col-lg-8">
+            <div class="card mp-panel-card h-100">
+
+                <div class="card-header mp-panel-header">
+                    <div>
+                        <h5 class="mp-titulo-panel">
+                            <i class="bx bx-calendar me-2"></i>
+                            Mi planificación
+                        </h5>
+                        <small class="text-muted">
+                            Un ejemplo de tus próximas comidas
+                        </small>
+                    </div>
+
+                    <span class="badge bg-label-success">
+                        Esta semana
+                    </span>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="mp-comida-fila">
+                        <img src="~/img/Bowl.png"
+                             alt="Desayuno saludable"
+                             class="mp-comida-miniatura" />
+
+                        <div class="flex-grow-1">
+                            <span class="mp-tipo-comida">DESAYUNO</span>
+                            <h6 class="mb-1">Avena con frutas</h6>
+                            <small class="text-muted">
+                                Una opción para comenzar el día.
+                            </small>
+                        </div>
+
+                        <i class="bx bx-sun mp-comida-icono"></i>
+                    </div>
+
+                    <div class="mp-comida-fila">
+                        <img src="~/img/comida-saludable.jpg"
+                             alt="Almuerzo saludable"
+                             class="mp-comida-miniatura" />
+
+                        <div class="flex-grow-1">
+                            <span class="mp-tipo-comida">ALMUERZO</span>
+                            <h6 class="mb-1">Pollo con vegetales</h6>
+                            <small class="text-muted">
+                                Una comida completa y deliciosa.
+                            </small>
+                        </div>
+
+                        <i class="bx bx-bowl-hot mp-comida-icono"></i>
+                    </div>
+
+                    <div class="mp-comida-fila">
+                        <img src="~/img/comida.jpg"
+                             alt="Cena saludable"
+                             class="mp-comida-miniatura" />
+
+                        <div class="flex-grow-1">
+                            <span class="mp-tipo-comida">CENA</span>
+                            <h6 class="mb-1">Ensalada de atún</h6>
+                            <small class="text-muted">
+                                Una alternativa práctica para la noche.
+                            </small>
+                        </div>
+
+                        <i class="bx bx-moon mp-comida-icono"></i>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- LISTA DE COMPRAS -->
+        <div class="col-lg-4">
+            <div class="card mp-panel-card h-100">
+
+                <div class="card-header mp-panel-header">
+                    <div>
+                        <h5 class="mp-titulo-panel">
+                            <i class="bx bx-cart me-2"></i>
+                            Lista de compras
+                        </h5>
+                        <small class="text-muted">
+                            Ejemplo de una lista reciente
+                        </small>
+                    </div>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="mp-compra-item">
+                        <span>
+                            <i class="bx bx-check-circle text-success me-2"></i>
+                            Huevos
+                        </span>
+                        <small>1 paquete</small>
+                    </div>
+
+                    <div class="mp-compra-item">
+                        <span>
+                            <i class="bx bx-circle text-muted me-2"></i>
+                            Avena
+                        </span>
+                        <small>1 paquete</small>
+                    </div>
+
+                    <div class="mp-compra-item">
+                        <span>
+                            <i class="bx bx-circle text-muted me-2"></i>
+                            Brócoli
+                        </span>
+                        <small>1 unidad</small>
+                    </div>
+
+                    <div class="mp-compra-item">
+                        <span>
+                            <i class="bx bx-check-circle text-success me-2"></i>
+                            Tomate
+                        </span>
+                        <small>3 unidades</small>
+                    </div>
+
+                    <div class="mp-compra-item">
+                        <span>
+                            <i class="bx bx-circle text-muted me-2"></i>
+                            Leche
+                        </span>
+                        <small>1 litro</small>
+                    </div>
+
+                    <div class="mp-compras-progreso mt-3">
+                        <div class="d-flex justify-content-between mb-2">
+                            <small>Productos comprados</small>
+                            <small class="fw-semibold">2 de 5</small>
+                        </div>
+
+                        <div class="progress" style="height: 8px;">
+                            <div class="progress-bar bg-success"
+                                 role="progressbar"
+                                 style="width: 40%;"
+                                 aria-valuenow="40"
+                                 aria-valuemin="0"
+                                 aria-valuemax="100">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ACCESOS RÁPIDOS -->
+    <div class="mb-3">
+        <h4 class="mp-titulo-seccion">Accesos rápidos</h4>
+        <p class="text-muted mb-0">
+            Las herramientas que necesitas para organizar tus comidas.
+        </p>
+    </div>
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-sm-6 col-xl-3">
+            <div class="mp-acceso-card">
+                <div class="mp-acceso-icono">
+                    <i class="bx bx-book-open"></i>
+                </div>
+                <h6>Explorar recetas</h6>
+                <p>Encuentra nuevas ideas para cocinar.</p>
+                <span class="mp-acceso-pendiente">Próximamente</span>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-xl-3">
+            <div class="mp-acceso-card">
+                <div class="mp-acceso-icono">
+                    <i class="bx bx-heart"></i>
+                </div>
+                <h6>Mis favoritos</h6>
+                <p>Consulta tus recetas guardadas.</p>
+                <span class="mp-acceso-pendiente">Próximamente</span>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-xl-3">
+            <div class="mp-acceso-card">
+                <div class="mp-acceso-icono">
+                    <i class="bx bx-calendar"></i>
+                </div>
+                <h6>Planificación</h6>
+                <p>Organiza tus comidas de la semana.</p>
+                <span class="mp-acceso-pendiente">Próximamente</span>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-xl-3">
+            <div class="mp-acceso-card">
+                <div class="mp-acceso-icono">
+                    <i class="bx bx-package"></i>
+                </div>
+                <h6>Mi despensa</h6>
+                <p>Revisa los ingredientes disponibles.</p>
+                <span class="mp-acceso-pendiente">Próximamente</span>
+            </div>
+        </div>
+
+    </div>
+
+</div>

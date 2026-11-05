@@ -1102,3 +1102,356 @@ body {
     }
 }
 
+/* ==========================================
+   MEALPREP - DASHBOARD DE USUARIO
+   ========================================== */
+
+.mealprep-dashboard {
+    color: #345b49;
+}
+
+/* Bienvenida con imagen de fondo */
+
+.mp-bienvenida {
+    background: linear-gradient( 110deg, rgba(5, 71, 45, 0.94), rgba(10, 112, 72, 0.78) ), url('/img/vegetales.jpg') center / cover no-repeat;
+    border-radius: 20px;
+    padding: 38px 42px;
+    color: #ffffff;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(13, 83, 53, 0.12);
+}
+
+.mp-bienvenida-etiqueta {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.17);
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.mp-bienvenida-titulo {
+    color: #ffffff;
+    font-size: 34px;
+    font-weight: 700;
+}
+
+.mp-bienvenida-subtitulo {
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 21px;
+}
+
+.mp-bienvenida-texto {
+    color: #e8fff2;
+    font-size: 14px;
+    line-height: 1.8;
+    max-width: 570px;
+}
+
+.mp-bienvenida-boton {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 20px;
+    background: #ffffff;
+    color: #08734b;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+/* Imagen circular */
+
+.mp-comida-circulo {
+    width: 230px;
+    height: 230px;
+    margin: auto;
+    padding: 7px;
+    border: 4px solid rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.mp-comida-imagen {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* Encabezados */
+
+.mp-seccion-encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.mp-titulo-seccion {
+    color: #275b43;
+    font-size: 21px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.mp-etiqueta-demo {
+    color: #19865c;
+    background: #e8f7ee;
+    padding: 7px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+/* Tarjetas de resumen */
+
+.mp-resumen-card {
+    border: 1px solid #e6eee8;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px rgba(30, 82, 54, 0.04);
+    height: 100%;
+}
+
+.mp-resumen-icono {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e7f7ed;
+    color: #16865a;
+    border-radius: 13px;
+    font-size: 25px;
+    margin-bottom: 18px;
+}
+
+.mp-resumen-numero {
+    color: #205b40;
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+.mp-resumen-titulo {
+    color: #345b49;
+    font-weight: 600;
+}
+
+.mp-resumen-descripcion {
+    font-size: 12px;
+    color: #82948a;
+    margin-bottom: 0;
+}
+
+/* Paneles */
+
+.mp-panel-card {
+    border: 1px solid #e6eee8;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px rgba(30, 82, 54, 0.04);
+}
+
+.mp-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #eef2ef;
+    padding: 22px 24px;
+}
+
+.mp-titulo-panel {
+    color: #275b43;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+/* Comidas */
+
+.mp-comida-fila {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: #f6faf7;
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 12px;
+}
+
+    .mp-comida-fila:last-child {
+        margin-bottom: 0;
+    }
+
+.mp-comida-miniatura {
+    width: 74px;
+    height: 74px;
+    object-fit: cover;
+    border-radius: 13px;
+    flex-shrink: 0;
+}
+
+.mp-tipo-comida {
+    color: #16865a;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.mp-comida-icono {
+    color: #32a477;
+    font-size: 25px;
+}
+
+/* Lista de compras */
+
+.mp-compra-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 0;
+    border-bottom: 1px solid #edf2ee;
+    font-size: 13px;
+}
+
+    .mp-compra-item:last-of-type {
+        border-bottom: none;
+    }
+
+    .mp-compra-item small {
+        color: #89958d;
+    }
+
+.mp-compras-progreso {
+    background: #f6faf7;
+    padding: 15px;
+    border-radius: 12px;
+}
+
+/* Accesos rápidos */
+
+.mp-acceso-card {
+    background: #ffffff;
+    border: 1px solid #e6eee8;
+    border-radius: 15px;
+    padding: 23px;
+    height: 100%;
+    box-shadow: 0 5px 20px rgba(30, 82, 54, 0.04);
+}
+
+.mp-acceso-icono {
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #e7f7ed;
+    color: #16865a;
+    font-size: 24px;
+    margin-bottom: 16px;
+}
+
+.mp-acceso-card h6 {
+    color: #345b49;
+    font-weight: 700;
+}
+
+.mp-acceso-card p {
+    font-size: 13px;
+    color: #81948a;
+    min-height: 38px;
+}
+
+.mp-acceso-pendiente {
+    display: inline-block;
+    font-size: 11px;
+    color: #19865c;
+    background: #edf8f1;
+    border-radius: 20px;
+    padding: 5px 10px;
+}
+
+/* Perfil de usuario en la barra superior */
+
+.mp-navbar-perfil {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-left: 18px;
+    border-left: 1px solid #e6ece8;
+}
+
+.mp-navbar-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #d5efdf;
+}
+
+.mp-navbar-rol {
+    font-size: 11px;
+    color: #16865a;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.mp-navbar-nombre {
+    font-size: 13px;
+    color: #345b49;
+    font-weight: 600;
+}
+
+/* Adaptación a pantallas pequeñas */
+
+@media (max-width: 767px) {
+    .mp-bienvenida {
+        padding: 26px 22px;
+    }
+
+    .mp-bienvenida-titulo {
+        font-size: 27px;
+    }
+
+    .mp-bienvenida-subtitulo {
+        font-size: 17px;
+    }
+
+    .mp-comida-circulo {
+        width: 175px;
+        height: 175px;
+    }
+
+    .mp-comida-miniatura {
+        width: 58px;
+        height: 58px;
+    }
+
+    .mp-navbar-perfil {
+        padding-left: 10px;
+        gap: 8px;
+    }
+
+    .mp-navbar-nombre {
+        max-width: 110px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+/* ==========================================
+   MEALPREP - AJUSTES DEL MENÚ LATERAL
+   ========================================== */
+
+/* Eliminar líneas decorativas de las secciones */
+#layout-menu .menu-header::before,
+#layout-menu .menu-header::after {
+    display: none !important;
+}

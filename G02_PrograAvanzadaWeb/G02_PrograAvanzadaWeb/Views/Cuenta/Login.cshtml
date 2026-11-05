@@ -1,173 +1,136 @@
-﻿@{
+﻿@model G02_PrograAvanzadaWeb.Models.LoginRequestModel
+
+@{
     ViewData["Title"] = "Iniciar sesión";
     Layout = "_LayoutAuth";
 }
 
 <div class="mealprep-auth-page">
-
     <div class="container-xxl">
-
         <div class="authentication-wrapper authentication-basic container-p-y">
-
             <div class="authentication-inner">
-
                 <div class="card mealprep-login-card">
-
                     <div class="card-body">
 
-                        <div class="mealprep-login-brand text-center">
+                        @if (TempData["MensajeExito"] != null)
+                        {
+                            <div class="alert alert-success">
+                                @TempData["MensajeExito"]
+                            </div>
+                        }
 
+                        <div class="mealprep-login-brand text-center">
                             <a asp-controller="Home"
                                asp-action="Index">
-
                                 <img src="~/img/MealPrep_logo_completo.png"
                                      alt="MealPrep"
                                      class="mealprep-login-logo" />
-
                             </a>
-
                         </div>
 
                         <div class="mealprep-login-header">
-
-                            <h4>
-                                ¡Bienvenido a MealPrep! 
-                            </h4>
-
-                            <p>
-                                Inicia sesión en tu cuenta para continuar
-                            </p>
-
+                            <h4>¡Bienvenido a MealPrep!</h4>
+                            <p>Inicia sesión en tu cuenta para continuar</p>
                         </div>
 
+                        @if (ViewBag.Mensaje != null)
+                        {
+                            <div class="alert alert-danger">
+                                @ViewBag.Mensaje
+                            </div>
+                        }
 
-                        <form id="formAuthentication"
+                        <form asp-controller="Cuenta"
+                              asp-action="Login"
+                              method="post"
+                              id="formAuthentication"
                               class="mb-3">
 
+                            @Html.AntiForgeryToken()
+
                             <div class="mb-3">
-
-                                <label for="email"
+                                <label asp-for="Correo"
                                        class="form-label">
-
-                                    Correo o usuario
-
+                                    Correo electrónico
                                 </label>
 
-                                <input type="text"
+                                <input asp-for="Correo"
+                                       type="email"
                                        class="form-control mealprep-auth-input"
-                                       id="email"
-                                       name="email-username"
-                                       placeholder="Ingrese su correo o usuario"
+                                       placeholder="Ingrese su correo electrónico"
                                        autofocus />
 
+                                <span asp-validation-for="Correo"
+                                      class="text-danger"></span>
                             </div>
 
-
                             <div class="mb-3 form-password-toggle">
-
                                 <div class="d-flex justify-content-between">
-
-                                    <label class="form-label"
-                                           for="password">
-
+                                    <label asp-for="Contrasena"
+                                           class="form-label">
                                         Contraseña
-
                                     </label>
 
                                     <a asp-controller="Cuenta"
                                        asp-action="RecuperarAcceso"
                                        class="mealprep-auth-link">
-
-                                        <small>
-                                            ¿Olvidó su contraseña?
-                                        </small>
-
+                                        <small>¿Olvidó su contraseña?</small>
                                     </a>
-
                                 </div>
-
 
                                 <div class="input-group input-group-merge">
-
-                                    <input type="password"
-                                           id="password"
+                                    <input asp-for="Contrasena"
+                                           type="password"
                                            class="form-control mealprep-auth-input"
-                                           name="password"
-                                           placeholder="············"
-                                           aria-describedby="password" />
+                                           placeholder="············" />
 
                                     <span class="input-group-text cursor-pointer">
-
                                         <i class="bx bx-hide"></i>
-
                                     </span>
-
                                 </div>
 
+                                <span asp-validation-for="Contrasena"
+                                      class="text-danger"></span>
                             </div>
 
-
                             <div class="mb-3">
-
                                 <div class="form-check">
-
                                     <input class="form-check-input"
                                            type="checkbox"
                                            id="remember-me" />
 
                                     <label class="form-check-label"
                                            for="remember-me">
-
                                         Recordarme
-
                                     </label>
-
                                 </div>
-
                             </div>
-
 
                             <div class="mb-3">
-
                                 <button class="btn mealprep-login-submit d-grid w-100"
-                                        type="button">
-
+                                        type="submit">
                                     Iniciar sesión
-
                                 </button>
-
                             </div>
-
                         </form>
 
-
                         <p class="text-center mealprep-register-text">
-
-                            <span>
-                                ¿Aún no tiene una cuenta?
-                            </span>
+                            <span>¿Aún no tiene una cuenta?</span>
 
                             <a asp-controller="Cuenta"
                                asp-action="Registro"
                                class="mealprep-auth-link">
-
-                                <span>
-                                    Crear una cuenta
-                                </span>
-
+                                <span>Crear una cuenta</span>
                             </a>
-
                         </p>
 
                     </div>
-
                 </div>
-               
-
             </div>
-
         </div>
-
     </div>
-
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
