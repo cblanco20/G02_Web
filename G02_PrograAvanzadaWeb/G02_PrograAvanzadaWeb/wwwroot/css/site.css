@@ -1455,3 +1455,45 @@ body {
 #layout-menu .menu-header::after {
     display: none !important;
 }
+
+/* ==========================================
+   MEALPREP - ADMINISTRACIÓN DE USUARIOS
+   ========================================== */
+
+.mp-usuario-inicial {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e7f7ed;
+    color: #16865a;
+    border-radius: 50%;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+#tablaUsuarios thead th {
+    background: #f6faf7;
+    color: #527463;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 17px;
+    white-space: nowrap;
+}
+
+#tablaUsuarios tbody td {
+    padding: 16px 17px;
+    font-size: 13px;
+    color: #456454;
+}
+
+#tablaUsuarios tbody tr:hover {
+    background: #f8fcf9;
+}
+
+#buscarUsuarios:focus {
+    border-color: #16865a;
+    box-shadow: 0 0 0 0.15rem rgba(22, 134, 90, 0.12);
+}

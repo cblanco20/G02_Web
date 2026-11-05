@@ -75,7 +75,7 @@
         </div>
 
         <span class="mp-etiqueta-demo">
-            Datos de demostración
+            Usuarios reales · Otros datos de demostración
         </span>
 
     </div>
@@ -94,7 +94,7 @@
                     </div>
 
                     <h3 class="mp-resumen-numero">
-                        24
+                        @ViewBag.TotalUsuarios
                     </h3>
 
                     <p class="mp-resumen-titulo mb-2">
@@ -453,9 +453,12 @@
                     y administra su estado.
                 </p>
 
-                <span class="mp-acceso-pendiente">
-                    Próximamente
-                </span>
+                <a asp-controller="Administrador"
+                   asp-action="Usuarios"
+                   class="btn btn-success btn-sm mt-2">
+                    <i class="bx bx-group me-1"></i>
+                    Gestionar usuarios
+                </a>
 
             </div>
 

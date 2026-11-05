@@ -163,5 +163,94 @@ namespace G02_API.Controllers
                 });
             }
         }
+
+        [HttpGet("Consultar")]
+        public IActionResult Consultar()
+        {
+            try
+            {
+                var connectionString = _configuration
+                    .GetValue<string>("Variables:ConnectionString");
+
+                using var conexion = new SqlConnection(connectionString);
+
+                var usuarios = conexion.Query<UsuarioConsulta>(
+                    "dbo.sp_ConsultarUsuarios",
+                    commandType: CommandType.StoredProcedure
+                ).ToList();
+
+                return Ok(usuarios);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, new
+                {
+                    Mensaje = "Ocurrió un error al consultar los usuarios."
+                });
+            }
+        }
+        [HttpPut("CambiarEstado")]
+        public IActionResult CambiarEstado([FromBody] CambiarEstadoUsuario modelo)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var connectionString = _configuration
+                    .GetValue<string>("Variables:ConnectionString");
+
+                if (string.IsNullOrWhiteSpace(connectionString))
+                {
+                    return StatusCode(500, new
+                    {
+                        mensaje = "La conexión no está configurada."
+                    });
+                }
+
+                using var conexion = new SqlConnection(connectionString);
+
+                var parametros = new DynamicParameters();
+
+                parametros.Add("@IdUsuario", modelo.IdUsuario);
+                parametros.Add("@Activo", modelo.Activo);
+
+                conexion.Execute(
+                    "dbo.sp_CambiarEstadoUsuario",
+                    parametros,
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return Ok(new
+                {
+                    mensaje = modelo.Activo == true
+                        ? "Usuario activado correctamente."
+                        : "Usuario desactivado correctamente."
+                });
+            }
+            catch (SqlException ex) when (ex.Number == 50003)
+            {
+                return NotFound(new
+                {
+                    mensaje = "El usuario no existe."
+                });
+            }
+            catch (SqlException ex) when (ex.Number == 50004)
+            {
+                return BadRequest(new
+                {
+                    mensaje = "No se permite modificar el estado de una cuenta administradora."
+                });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, new
+                {
+                    mensaje = "Ocurrió un error al cambiar el estado del usuario."
+                });
+            }
+        }
     }
 }

@@ -116,11 +116,11 @@
                         <span class="menu-header-text">Gestión de usuarios</span>
                     </li>
 
-                    <li class="menu-item">
+                    <li class="menu-item @(controladorActual == "Administrador" && accionActual == "Usuarios" ? "active" : "")">
 
-                        <a href="#"
-                           class="menu-link"
-                           title="Próximamente">
+                        <a asp-controller="Administrador"
+                           asp-action="Usuarios"
+                           class="menu-link">
 
                             <i class="menu-icon tf-icons bx bx-group"></i>
 

@@ -1,0 +1,294 @@
+﻿@model List<G02_PrograAvanzadaWeb.Models.UsuarioConsulta>
+
+@{
+    ViewData["Title"] = "Usuarios registrados";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    var totalUsuarios = Model.Count;
+    var usuariosActivos = Model.Count(u => u.Activo);
+    var usuariosInactivos = Model.Count(u => !u.Activo);
+}
+
+<div class="mealprep-dashboard">
+
+    <!-- ENCABEZADO -->
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+        <div>
+            <h4 class="mp-titulo-seccion mb-1">
+                <i class="bx bx-group me-2"></i>
+                Usuarios registrados
+            </h4>
+            <p class="text-muted mb-0">
+                Consulta y administra las cuentas registradas en MealPrep.
+            </p>
+        </div>
+
+        <span class="badge bg-label-success rounded-pill px-3 py-2">
+            <i class="bx bx-shield-quarter me-1"></i>
+            Panel administrativo
+        </span>
+    </div>
+
+    <!-- MENSAJE DE ERROR -->
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            <i class="bx bx-error-circle me-2"></i>
+            @TempData["Error"]
+        </div>
+    }
+    @if (TempData["Exito"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            <i class="bx bx-check-circle me-2"></i>
+            @TempData["Exito"]
+        </div>
+    }
+
+    <!-- TARJETAS DE RESUMEN -->
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-4">
+            <div class="card mp-resumen-card">
+                <div class="card-body">
+                    <div class="mp-resumen-icono">
+                        <i class="bx bx-group"></i>
+                    </div>
+
+                    <h3 class="mp-resumen-numero">@totalUsuarios</h3>
+                    <div class="mp-resumen-titulo">Total de usuarios</div>
+                    <p class="mp-resumen-descripcion mt-2">
+                        Cuentas registradas en el sistema.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card mp-resumen-card">
+                <div class="card-body">
+                    <div class="mp-resumen-icono">
+                        <i class="bx bx-check-circle"></i>
+                    </div>
+
+                    <h3 class="mp-resumen-numero">@usuariosActivos</h3>
+                    <div class="mp-resumen-titulo">Usuarios activos</div>
+                    <p class="mp-resumen-descripcion mt-2">
+                        Cuentas que se encuentran habilitadas.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card mp-resumen-card">
+                <div class="card-body">
+                    <div class="mp-resumen-icono">
+                        <i class="bx bx-user-x"></i>
+                    </div>
+
+                    <h3 class="mp-resumen-numero">@usuariosInactivos</h3>
+                    <div class="mp-resumen-titulo">Usuarios inactivos</div>
+                    <p class="mp-resumen-descripcion mt-2">
+                        Cuentas que se encuentran deshabilitadas.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- TABLA DE USUARIOS -->
+    <div class="card mp-panel-card">
+
+        <div class="card-header bg-transparent py-4">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+                <div>
+                    <h5 class="mp-titulo-panel mb-1">
+                        <i class="bx bx-list-ul me-2"></i>
+                        Listado de usuarios
+                    </h5>
+
+                    <small class="text-muted">
+                        Información registrada en la base de datos.
+                    </small>
+                </div>
+
+                <div class="input-group" style="max-width: 290px;">
+                    <span class="input-group-text bg-transparent">
+                        <i class="bx bx-search"></i>
+                    </span>
+
+                    <input type="search"
+                           id="buscarUsuarios"
+                           class="form-control"
+                           placeholder="Buscar usuario..."
+                           aria-label="Buscar usuario" />
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card-body p-0">
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0"
+                       id="tablaUsuarios">
+
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Usuario</th>
+                            <th>Correo electrónico</th>
+                            <th>Rol</th>
+                            <th>Estado</th>
+                            <th>Fecha de registro</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var usuario in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <span class="text-muted">
+                                        #@usuario.IdUsuario
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="mp-usuario-inicial">
+                                            @(string.IsNullOrWhiteSpace(usuario.NombreUsuario)
+                                                ? "U"
+                                                : usuario.NombreUsuario.Substring(0, 1).ToUpper())
+                                        </div>
+
+                                        <span class="fw-semibold">
+                                            @usuario.NombreUsuario
+                                        </span>
+                                    </div>
+                                </td>
+
+                                <td>@usuario.Correo</td>
+
+                                <td>
+                                    @if (usuario.IdRol == 2)
+                                    {
+                                        <span class="badge bg-label-primary">
+                                            <i class="bx bx-shield me-1"></i>
+                                            Administrador
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-label-info">
+                                            <i class="bx bx-user me-1"></i>
+                                            Usuario
+                                        </span>
+                                    }
+                                </td>
+
+                                <td>
+                                    @if (usuario.Activo)
+                                    {
+                                        <span class="badge bg-label-success">
+                                            <i class="bx bx-check-circle me-1"></i>
+                                            Activo
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-label-danger">
+                                            <i class="bx bx-x-circle me-1"></i>
+                                            Inactivo
+                                        </span>
+                                    }
+                                </td>
+
+                                <td>
+                                    @usuario.FechaRegistro.ToString("dd/MM/yyyy")
+                                </td>
+                                <td>
+                                    @if (usuario.IdRol == 2)
+                                    {
+                                        <span class="text-muted small">
+                                            <i class="bx bx-lock-alt me-1"></i>
+                                            Protegido
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <form asp-controller="Administrador"
+                                              asp-action="CambiarEstado"
+                                              method="post">
+
+                                            @Html.AntiForgeryToken()
+
+                                            <input type="hidden"
+                                                   name="idUsuario"
+                                                   value="@usuario.IdUsuario" />
+
+                                            <input type="hidden"
+                                                   name="activo"
+                                                   value="@(usuario.Activo ? "false" : "true")" />
+
+                                            @if (usuario.Activo)
+                                            {
+                                                <button type="submit"
+                                                        class="btn btn-sm btn-outline-danger">
+                                                    <i class="bx bx-user-x me-1"></i>
+                                                    Desactivar
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <button type="submit"
+                                                        class="btn btn-sm btn-outline-success">
+                                                    <i class="bx bx-user-check me-1"></i>
+                                                    Activar
+                                                </button>
+                                            }
+
+                                        </form>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            @if (!Model.Any())
+            {
+                <div class="text-center py-5">
+                    <i class="bx bx-user-x fs-1 text-muted"></i>
+                    <p class="text-muted mt-3 mb-0">
+                        No hay usuarios para mostrar.
+                    </p>
+                </div>
+            }
+
+            <div id="sinResultados"
+                 class="text-center text-muted py-4 d-none">
+                No se encontraron usuarios con ese criterio.
+            </div>
+
+        </div>
+
+        <div class="card-footer bg-transparent py-3">
+            <small class="text-muted">
+                <i class="bx bx-info-circle me-1"></i>
+                Los datos se consultan desde la API de MealPrep.
+            </small>
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <script src="~/js/usuarios-admin.js"></script>
+}
