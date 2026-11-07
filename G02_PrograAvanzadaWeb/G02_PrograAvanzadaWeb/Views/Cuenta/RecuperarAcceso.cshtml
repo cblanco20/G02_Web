@@ -40,8 +40,28 @@
 
                         </div>
 
+                        
+                        @if (ViewBag.Mensaje != null)
+                        {
+                            <div class="alert alert-success" role="alert">
+                                @ViewBag.Mensaje
+                            </div>
+                        }
+
+                        @if (ViewBag.Error != null)
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                @ViewBag.Error
+                            </div>
+                        }
+
+
                         <form id="formAuthentication"
+                              asp-controller="Cuenta"
+                              asp-action="RecuperarAcceso"
+                              method="post"
                               class="mb-3">
+                            @Html.AntiForgeryToken()
 
                             <div class="mb-3">
 
@@ -50,11 +70,13 @@
                                     Correo electrónico
                                 </label>
 
-                                <input type="text"
+                                <input type="email"
                                        class="form-control mealprep-auth-input"
                                        id="email"
-                                       name="email"
+                                       name="correo"
                                        placeholder="Ingrese su correo electrónico"
+                                       autocomplete="email"
+                                       required
                                        autofocus />
 
                             </div>
@@ -62,10 +84,8 @@
                             <div class="mb-3">
 
                                 <button class="btn mealprep-login-submit d-grid w-100"
-                                        type="button">
-
+                                        type="submit">
                                     Enviar enlace de recuperación
-
                                 </button>
 
                             </div>

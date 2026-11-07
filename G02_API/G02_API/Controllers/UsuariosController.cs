@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using G02_API.Services;
 
 namespace G02_API.Controllers
 {
@@ -11,14 +12,23 @@ namespace G02_API.Controllers
     [ApiController]
     public class UsuariosController : ControllerBase
     {
+
         private readonly IConfiguration _configuration;
         private readonly PasswordHasher<RegistroUsuario> _passwordHasher;
+        private readonly CorreoService _correoService;
+        private readonly TokenRecuperacionService _tokenService;
 
-        public UsuariosController(IConfiguration configuration)
+        public UsuariosController(
+            IConfiguration configuration,
+            CorreoService correoService,
+            TokenRecuperacionService tokenService)
         {
             _configuration = configuration;
+            _correoService = correoService;
+            _tokenService = tokenService;
             _passwordHasher = new PasswordHasher<RegistroUsuario>();
         }
+
 
         [HttpPost("Registrar")]
         public IActionResult Registrar([FromBody] RegistroUsuario modelo)
@@ -252,5 +262,167 @@ namespace G02_API.Controllers
                 });
             }
         }
+
+        [HttpPost("SolicitarRecuperacion")]
+        public async Task<IActionResult> SolicitarRecuperacion(
+            [FromBody] RecuperarContrasenaRequest modelo)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            const string mensaje =
+                "Si el correo está registrado y activo, recibirá " +
+                "las instrucciones para recuperar su contraseña.";
+
+            try
+            {
+                var connectionString = _configuration
+                    .GetValue<string>("Variables:ConnectionString");
+
+                if (string.IsNullOrWhiteSpace(connectionString))
+                {
+                    return StatusCode(500, new
+                    {
+                        mensaje = "La conexión no está configurada."
+                    });
+                }
+
+                string token = _tokenService.GenerarToken();
+                string tokenHash = _tokenService.ObtenerHash(token);
+
+                DateTime vencimiento = DateTime.UtcNow.AddMinutes(30);
+
+                using var conexion = new SqlConnection(connectionString);
+
+                var parametros = new DynamicParameters();
+                parametros.Add("@Correo", modelo.Correo);
+                parametros.Add("@TokenHash", tokenHash);
+                parametros.Add("@FinToken", vencimiento);
+
+                int actualizados = conexion.QuerySingle<int>(
+                    "dbo.sp_GuardarTokenRecuperacion",
+                    parametros,
+                    commandType: CommandType.StoredProcedure
+                );
+
+                if (actualizados == 0)
+                {
+                    return Ok(new { mensaje });
+                }
+
+                var baseUrl = _configuration["Variables:WebBaseUrl"];
+
+                if (string.IsNullOrWhiteSpace(baseUrl))
+                {
+                    return StatusCode(500, new
+                    {
+                        mensaje = "La dirección de la WEB no está configurada."
+                    });
+                }
+
+                string enlace = $"{baseUrl.TrimEnd('/')}/Cuenta/RestablecerContrasena?token={Uri.EscapeDataString(token)}";
+
+
+                string rutaPlantilla = Path.Combine(
+                    AppContext.BaseDirectory,
+                    "Content",
+                    "RecuperacionContrasena.html"
+                );
+
+                string contenidoHtml = await System.IO.File.ReadAllTextAsync(
+                    rutaPlantilla
+                );
+
+                contenidoHtml = contenidoHtml.Replace(
+                    "{{ENLACE}}",
+                    System.Net.WebUtility.HtmlEncode(enlace)
+                );
+
+
+                await _correoService.EnviarCorreo(
+                    modelo.Correo,
+                    "Recuperar contraseña - MealPrep",
+                    contenidoHtml
+                );
+
+                return Ok(new { mensaje });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, new
+                {
+                    mensaje = "No fue posible procesar la solicitud."
+                });
+            }
+        }
+
+        [HttpPost("RestablecerContrasena")]
+        public IActionResult RestablecerContrasena(
+            [FromBody] RestablecerContrasenaRequest modelo)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var connectionString = _configuration
+                    .GetValue<string>("Variables:ConnectionString");
+
+                if (string.IsNullOrWhiteSpace(connectionString))
+                {
+                    return StatusCode(500, new
+                    {
+                        mensaje = "La conexión no está configurada."
+                    });
+                }
+           
+                string tokenHash = _tokenService.ObtenerHash(modelo.Token);
+
+                var usuario = new RegistroUsuario();
+
+                string contrasenaHash = _passwordHasher.HashPassword(
+                    usuario,
+                    modelo.NuevaContrasena
+                );
+
+                using var conexion = new SqlConnection(connectionString);
+
+                var parametros = new DynamicParameters();
+                parametros.Add("@TokenHash", tokenHash);
+                parametros.Add("@ContrasenaHash", contrasenaHash);
+
+                int actualizados = conexion.QuerySingle<int>(
+                    "dbo.sp_RestablecerContrasena",
+                    parametros,
+                    commandType: CommandType.StoredProcedure
+                );
+
+                if (actualizados == 0)
+                {
+                    return BadRequest(new
+                    {
+                        mensaje = "El enlace de recuperación no es válido o ha vencido."
+                    });
+                }
+
+                return Ok(new
+                {
+                    mensaje = "La contraseña se restableció correctamente."
+                });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, new
+                {
+                    mensaje = "Ocurrió un error al restablecer la contraseña."
+                });
+            }
+        }
+
+
     }
 }

@@ -1,0 +1,110 @@
+﻿@{
+    ViewData["Title"] = "Restablecer contraseña";
+    Layout = "_LayoutAuth";
+}
+
+<div class="mealprep-auth-page">
+    <div class="container-xxl">
+        <div class="authentication-wrapper authentication-basic container-p-y">
+            <div class="authentication-inner">
+                <div class="card mealprep-login-card">
+                    <div class="card-body">
+
+                        <div class="mealprep-login-brand text-center">
+                            <a asp-controller="Home"
+                               asp-action="Index">
+                                <img src="~/img/MealPrep_logo_completo.png"
+                                     alt="MealPrep"
+                                     class="mealprep-login-logo" />
+                            </a>
+                        </div>
+
+                        <div class="mealprep-login-header">
+                            <h4>Restablecer contraseña</h4>
+                            <p>
+                                Ingrese su nueva contraseña y confírmela
+                                para recuperar el acceso a su cuenta.
+                            </p>
+                        </div>
+
+                        @if (ViewBag.Mensaje != null)
+                        {
+                            <div class="alert alert-success" role="alert">
+                                @ViewBag.Mensaje
+                            </div>
+                        }
+
+                        @if (ViewBag.Error != null)
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                @ViewBag.Error
+                            </div>
+                        }
+
+                        <form asp-controller="Cuenta"
+                              asp-action="RestablecerContrasena"
+                              method="post"
+                              class="mb-3">
+
+                            @Html.AntiForgeryToken()
+
+                            <input type="hidden"
+                                   name="token"
+                                   value="@ViewBag.Token" />
+
+                            <div class="mb-3">
+                                <label for="nuevaContrasena"
+                                       class="form-label">
+                                    Nueva contraseña
+                                </label>
+
+                                <input type="password"
+                                       class="form-control mealprep-auth-input"
+                                       id="nuevaContrasena"
+                                       name="nuevaContrasena"
+                                       placeholder="Ingrese su nueva contraseña"
+                                       minlength="8"
+                                       autocomplete="new-password"
+                                       required />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="confirmarContrasena"
+                                       class="form-label">
+                                    Confirmar contraseña
+                                </label>
+
+                                <input type="password"
+                                       class="form-control mealprep-auth-input"
+                                       id="confirmarContrasena"
+                                       name="confirmarContrasena"
+                                       placeholder="Confirme su nueva contraseña"
+                                       minlength="8"
+                                       autocomplete="new-password"
+                                       required />
+                            </div>
+
+                            <div class="mb-3">
+                                <button class="btn mealprep-login-submit d-grid w-100"
+                                        type="submit">
+                                    Restablecer contraseña
+                                </button>
+                            </div>
+
+                        </form>
+
+                        <div class="text-center">
+                            <a asp-controller="Cuenta"
+                               asp-action="Login"
+                               class="mealprep-auth-link d-flex align-items-center justify-content-center">
+                                <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
+                                Volver a iniciar sesión
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -139,6 +139,124 @@ namespace G02_PrograAvanzadaWeb.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RecuperarAcceso(string correo)
+        {
+            if (string.IsNullOrWhiteSpace(correo))
+            {
+                ViewBag.Error = "Debe ingresar su correo electrónico.";
+                return View();
+            }
+
+            try
+            {
+                var respuesta = await _httpClient.PostAsJsonAsync(
+                    "api/Usuarios/SolicitarRecuperacion",
+                    new
+                    {
+                        Correo = correo
+                    }
+                );
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    ViewBag.Mensaje =
+                        "Si el correo está registrado y activo, " +
+                        "recibirá las instrucciones para recuperar su contraseña.";
+                }
+                else
+                {
+                    ViewBag.Error =
+                        "No fue posible procesar la solicitud. Inténtelo nuevamente.";
+                }
+            }
+            catch (HttpRequestException)
+            {
+                ViewBag.Error =
+                    "No fue posible conectar con el servidor. Inténtelo nuevamente.";
+            }
+
+            return View();
+        }
+
+
+        [HttpGet]
+        public IActionResult RestablecerContrasena(string token)
+        {
+            if (string.IsNullOrWhiteSpace(token))
+            {
+                return RedirectToAction("RecuperarAcceso", "Cuenta");
+            }
+
+            ViewBag.Token = token;
+
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RestablecerContrasena(
+            string token,
+            string nuevaContrasena,
+            string confirmarContrasena)
+        {
+            ViewBag.Token = token;
+
+            if (string.IsNullOrWhiteSpace(token))
+            {
+                ViewBag.Error = "El enlace de recuperación no es válido.";
+                return View();
+            }
+
+            if (string.IsNullOrWhiteSpace(nuevaContrasena) ||
+                nuevaContrasena.Length < 8)
+            {
+                ViewBag.Error = "La contraseña debe tener al menos 8 caracteres.";
+                return View();
+            }
+
+            if (nuevaContrasena != confirmarContrasena)
+            {
+                ViewBag.Error = "Las contraseñas no coinciden.";
+                return View();
+            }
+
+            try
+            {
+                var respuesta = await _httpClient.PostAsJsonAsync(
+                    "api/Usuarios/RestablecerContrasena",
+                    new
+                    {
+                        Token = token,
+                        NuevaContrasena = nuevaContrasena
+                    }
+                );
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    TempData["MensajeExito"] =
+                        "Su contraseña se restableció correctamente. Ya puede iniciar sesión.";
+
+                    return RedirectToAction("Login", "Cuenta");
+                }
+
+                ViewBag.Error =
+                    "No fue posible restablecer la contraseña. " +
+                    "El enlace puede ser inválido o haber vencido.";
+            }
+            catch (HttpRequestException)
+            {
+                ViewBag.Error =
+                    "No fue posible conectar con el servidor. Inténtelo nuevamente.";
+            }
+
+            return View();
+        }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult CerrarSesion()
