@@ -1,0 +1,139 @@
+﻿@model G02_PrograAvanzadaWeb.Models.PerfilUsuario
+
+@{
+    ViewData["Title"] = "Mi perfil";
+
+    var idRol = Context.Session.GetInt32("IdRol");
+
+    Layout = idRol == 2
+        ? "~/Views/Shared/_LayoutAdmin.cshtml"
+        : "~/Views/Shared/_LayoutUsuario.cshtml";
+}
+
+<div class="mealprep-dashboard">
+
+    <div class="mb-4">
+        <h3 class="mp-titulo-seccion">
+            <i class="bx bx-user-circle me-2"></i>
+            Mi perfil
+        </h3>
+
+        <p class="text-muted">
+            Consulta y actualiza la información de tu cuenta.
+        </p>
+    </div>
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card mp-panel-card">
+
+                <div class="card-header mp-panel-header">
+                    <div>
+                        <h5 class="mp-titulo-panel mb-1">
+                            <i class="bx bx-user me-2"></i>
+                            Información personal
+                        </h5>
+
+                        <small class="text-muted">
+                            Mantén tus datos actualizados.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="card-body p-4">
+
+                   
+                    @if (TempData["Exito"] != null)
+                    {
+                        <div class="alert alert-success">
+                            @TempData["Exito"]
+                        </div>
+                    }
+
+
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-danger">
+                            @TempData["Error"]
+                        </div>
+                    }
+
+                    <form asp-controller="Cuenta"
+                          asp-action="Perfil"
+                          method="post">
+
+                        @Html.AntiForgeryToken()
+
+                        <div class="mb-3">
+                            <label asp-for="NombreUsuario"
+                                   class="form-label fw-semibold">
+                                Nombre de usuario
+                            </label>
+
+                            <input asp-for="NombreUsuario"
+                                   class="form-control"
+                                   maxlength="150" />
+
+                            <span asp-validation-for="NombreUsuario"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Correo"
+                                   class="form-label fw-semibold">
+                                Correo electrónico
+                            </label>
+
+                            <input asp-for="Correo"
+                                   class="form-control"
+                                   type="email"
+                                   maxlength="150" />
+
+                            <span asp-validation-for="Correo"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">
+                                Rol
+                            </label>
+
+                            <input type="text"
+                                   class="form-control"
+                                   value="@Model.NombreRol"
+                                   disabled />
+
+                            <small class="text-muted">
+                                El rol de tu cuenta no se puede modificar.
+                            </small>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2">
+
+                            <a asp-controller="@(idRol == 2 ? "Administrador" : "Usuario")"
+                               asp-action="Index"
+                               class="btn btn-outline-secondary">
+                                Cancelar
+                            </a>
+
+                            <button type="submit"
+                                    class="btn btn-success">
+                                <i class="bx bx-save me-1"></i>
+                                Guardar cambios
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

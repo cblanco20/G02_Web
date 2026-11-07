@@ -1,4 +1,5 @@
-﻿using G02_PrograAvanzadaWeb.Models;
+﻿using System.Net.Http.Headers;
+using G02_PrograAvanzadaWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Json;
 
@@ -42,6 +43,15 @@ namespace G02_PrograAvanzadaWeb.Controllers
                         return View(model);
                     }
 
+
+                    if (string.IsNullOrWhiteSpace(datos.Token))
+                    {
+                        ViewBag.Mensaje =
+                            "No se pudo completar la autenticación del usuario.";
+
+                        return View(model);
+                    }
+
                     HttpContext.Session.Clear();
 
                     HttpContext.Session.SetInt32("Autenticado", 1);
@@ -49,6 +59,9 @@ namespace G02_PrograAvanzadaWeb.Controllers
                     HttpContext.Session.SetString("Nombre", datos.NombreUsuario);
                     HttpContext.Session.SetString("Rol", datos.NombreRol);
                     HttpContext.Session.SetInt32("IdRol", datos.IdRol);
+
+                    HttpContext.Session.SetString("TokenJWT", datos.Token);
+
 
                     if (datos.IdRol == 1)
                     {
@@ -254,6 +267,180 @@ namespace G02_PrograAvanzadaWeb.Controllers
             }
 
             return View();
+        }
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> Perfil()
+        {
+            if (HttpContext.Session.GetInt32("Autenticado") != 1)
+            {
+                return RedirectToAction("Login", "Cuenta");
+            }
+
+            int? idUsuario = HttpContext.Session.GetInt32("IdUsuario");
+            string? token = HttpContext.Session.GetString("TokenJWT");
+
+            if (idUsuario == null || string.IsNullOrWhiteSpace(token))
+            {
+                HttpContext.Session.Clear();
+                return RedirectToAction("Login", "Cuenta");
+            }
+
+            try
+            {
+                using var solicitud = new HttpRequestMessage(
+                    HttpMethod.Get,
+                    $"api/Usuarios/ConsultarPerfil/{idUsuario.Value}"
+                );
+
+                solicitud.Headers.Authorization =
+                    new AuthenticationHeaderValue("Bearer", token);
+
+                using var respuesta = await _httpClient.SendAsync(solicitud);
+
+                if (respuesta.StatusCode ==
+                    System.Net.HttpStatusCode.Unauthorized)
+                {
+                    HttpContext.Session.Clear();
+
+                    TempData["Error"] =
+                        "Tu sesión ha vencido. Inicia sesión nuevamente.";
+
+                    return RedirectToAction("Login", "Cuenta");
+                }
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    var perfil = await respuesta.Content
+                        .ReadFromJsonAsync<PerfilUsuario>();
+
+                    if (perfil != null)
+                    {
+                        return View(perfil);
+                    }
+                }
+
+                TempData["Error"] =
+                    "No fue posible consultar la información del perfil.";
+            }
+            catch (HttpRequestException)
+            {
+                TempData["Error"] =
+                    "No fue posible conectar con el servidor.";
+            }
+
+            int? rol = HttpContext.Session.GetInt32("IdRol");
+
+            return rol == 2
+                ? RedirectToAction("Index", "Administrador")
+                : RedirectToAction("Index", "Usuario");
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Perfil(PerfilUsuario modelo)
+        {
+            if (HttpContext.Session.GetInt32("Autenticado") != 1)
+            {
+                return RedirectToAction("Login", "Cuenta");
+            }
+
+            int? idUsuario = HttpContext.Session.GetInt32("IdUsuario");
+            string? token = HttpContext.Session.GetString("TokenJWT");
+
+
+            if (idUsuario == null || string.IsNullOrWhiteSpace(token))
+            {
+                HttpContext.Session.Clear();
+                return RedirectToAction("Login", "Cuenta");
+            }
+
+            int? idRol = HttpContext.Session.GetInt32("IdRol");
+
+            modelo.IdUsuario = idUsuario.Value;
+            modelo.IdRol = idRol ?? 0;
+
+            modelo.NombreRol = idRol switch
+            {
+                1 => "Usuario",
+                2 => "Administrador",
+                _ => "Sin rol"
+            };
+
+            if (!ModelState.IsValid)
+            {
+                return View(modelo);
+            }
+
+
+            try
+            {
+                var datosActualizar = new
+                {
+                    modelo.NombreUsuario,
+                    modelo.Correo
+                };
+
+                using var solicitud = new HttpRequestMessage(
+                    HttpMethod.Put,
+                    $"api/Usuarios/ActualizarPerfil/{idUsuario.Value}"
+                );
+
+                solicitud.Headers.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue(
+                        "Bearer", token);
+
+                solicitud.Content = JsonContent.Create(datosActualizar);
+
+                using var respuesta = await _httpClient.SendAsync(solicitud);
+
+                if (respuesta.StatusCode ==
+                    System.Net.HttpStatusCode.Unauthorized)
+                {
+                    HttpContext.Session.Clear();
+
+                    TempData["Error"] =
+                        "Tu sesión ha vencido. Inicia sesión nuevamente.";
+
+                    return RedirectToAction("Login", "Cuenta");
+                }
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    HttpContext.Session.SetString(
+                        "Nombre", modelo.NombreUsuario);
+
+                    TempData["Exito"] =
+                        "Tu perfil se actualizó correctamente.";
+
+                    return RedirectToAction("Perfil", "Cuenta");
+                }
+
+                if (respuesta.StatusCode ==
+                    System.Net.HttpStatusCode.Conflict)
+                {
+                    ModelState.AddModelError(
+                        "Correo",
+                        "El correo ya está registrado por otro usuario.");
+
+                    return View(modelo);
+                }
+
+                ModelState.AddModelError(
+                    "",
+                    "No fue posible actualizar el perfil.");
+            }
+            catch (HttpRequestException)
+            {
+                ModelState.AddModelError(
+                    "",
+                    "No fue posible conectar con el servidor.");
+            }
+
+            return View(modelo);
         }
 
 

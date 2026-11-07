@@ -201,11 +201,12 @@
                         <span class="menu-header-text">Mi cuenta</span>
                     </li>
 
-                    <li class="menu-item">
+                   
+                    <li class="menu-item @(controladorActual == "Cuenta" && accionActual == "Perfil" ? "active" : "")">
 
-                        <a href="#"
-                           class="menu-link"
-                           title="Próximamente">
+                        <a asp-controller="Cuenta"
+                           asp-action="Perfil"
+                           class="menu-link">
 
                             <i class="menu-icon tf-icons bx bx-user-circle"></i>
 
@@ -214,6 +215,7 @@
                         </a>
 
                     </li>
+
 
                     <li class="menu-item">
 

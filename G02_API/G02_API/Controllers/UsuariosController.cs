@@ -1,4 +1,6 @@
-﻿using Dapper;
+﻿using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using Dapper;
 using G02_API.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,17 +19,22 @@ namespace G02_API.Controllers
         private readonly PasswordHasher<RegistroUsuario> _passwordHasher;
         private readonly CorreoService _correoService;
         private readonly TokenRecuperacionService _tokenService;
+        private readonly JwtService _jwtService;
+
 
         public UsuariosController(
             IConfiguration configuration,
             CorreoService correoService,
-            TokenRecuperacionService tokenService)
+            TokenRecuperacionService tokenService,
+            JwtService jwtService)
         {
             _configuration = configuration;
             _correoService = correoService;
             _tokenService = tokenService;
+            _jwtService = jwtService;
             _passwordHasher = new PasswordHasher<RegistroUsuario>();
         }
+
 
 
         [HttpPost("Registrar")]
@@ -155,6 +162,12 @@ namespace G02_API.Controllers
                     });
                 }
 
+
+                string token = _jwtService.GenerarToken(
+                    usuario.IdUsuario,
+                    usuario.IdRol
+                );
+
                 return Ok(new
                 {
                     mensaje = "Inicio de sesión correcto.",
@@ -162,8 +175,10 @@ namespace G02_API.Controllers
                     usuario.NombreUsuario,
                     usuario.Correo,
                     usuario.IdRol,
-                    usuario.NombreRol
+                    usuario.NombreRol,
+                    Token = token
                 });
+
             }
             catch (Exception)
             {
@@ -199,6 +214,166 @@ namespace G02_API.Controllers
                 });
             }
         }
+
+
+        [Authorize]
+        [HttpGet("ConsultarPerfil/{idUsuario}")]
+        public IActionResult ConsultarPerfil(int idUsuario)
+        {
+            int? idAutenticado = ObtenerIdUsuarioAutenticado();
+
+            if (idAutenticado == null)
+            {
+                return Unauthorized(new
+                {
+                    mensaje = "No se pudo identificar al usuario."
+                });
+            }
+
+            if (idUsuario != idAutenticado.Value)
+            {
+                return Forbid();
+            }
+
+            try
+            {
+                var connectionString = _configuration
+                    .GetValue<string>("Variables:ConnectionString");
+
+                if (string.IsNullOrWhiteSpace(connectionString))
+                {
+                    return StatusCode(500, new
+                    {
+                        mensaje = "La conexión no está configurada."
+                    });
+                }
+
+                using var conexion = new SqlConnection(connectionString);
+
+                var parametros = new DynamicParameters();
+                parametros.Add("@IdUsuario", idAutenticado.Value);
+
+                var perfil = conexion.QueryFirstOrDefault<PerfilUsuario>(
+                    "dbo.sp_ConsultarPerfil",
+                    parametros,
+                    commandType: CommandType.StoredProcedure
+                );
+
+                if (perfil == null)
+                {
+                    return NotFound(new
+                    {
+                        mensaje = "No se encontró el perfil del usuario."
+                    });
+                }
+
+                return Ok(perfil);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, new
+                {
+                    mensaje = "Ocurrió un error al consultar el perfil."
+                });
+            }
+        }
+
+
+
+
+        [Authorize]
+        [HttpPut("ActualizarPerfil/{idUsuario}")]
+        public IActionResult ActualizarPerfil(
+            int idUsuario,
+            [FromBody] ActualizarPerfilRequest modelo)
+        {
+            int? idAutenticado = ObtenerIdUsuarioAutenticado();
+
+            if (idAutenticado == null)
+            {
+                return Unauthorized(new
+                {
+                    mensaje = "No se pudo identificar al usuario."
+                });
+            }
+
+            if (idUsuario != idAutenticado.Value)
+            {
+                return Forbid();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var connectionString = _configuration
+                    .GetValue<string>("Variables:ConnectionString");
+
+                if (string.IsNullOrWhiteSpace(connectionString))
+                {
+                    return StatusCode(500, new
+                    {
+                        mensaje = "La conexión no está configurada."
+                    });
+                }
+
+                using var conexion = new SqlConnection(connectionString);
+
+                var parametros = new DynamicParameters();
+
+                parametros.Add("@IdUsuario", idAutenticado.Value);
+                parametros.Add("@NombreUsuario", modelo.NombreUsuario.Trim());
+                parametros.Add("@Correo", modelo.Correo.Trim());
+
+                conexion.Execute(
+                    "dbo.sp_ActualizarPerfil",
+                    parametros,
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return Ok(new
+                {
+                    mensaje = "Perfil actualizado correctamente."
+                });
+            }
+            catch (SqlException ex) when (
+                ex.Number == 50003 ||
+                ex.Number == 2601 ||
+                ex.Number == 2627)
+            {
+                return Conflict(new
+                {
+                    mensaje = "El correo ya está registrado por otro usuario."
+                });
+            }
+            catch (SqlException ex) when (ex.Number == 50001)
+            {
+                return BadRequest(new
+                {
+                    mensaje = "Debe completar todos los campos."
+                });
+            }
+            catch (SqlException ex) when (ex.Number == 50002)
+            {
+                return NotFound(new
+                {
+                    mensaje = "El usuario no existe o está inactivo."
+                });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, new
+                {
+                    mensaje = "Ocurrió un error al actualizar el perfil."
+                });
+            }
+        }
+
+
+
         [HttpPut("CambiarEstado")]
         public IActionResult CambiarEstado([FromBody] CambiarEstadoUsuario modelo)
         {
@@ -421,6 +596,20 @@ namespace G02_API.Controllers
                     mensaje = "Ocurrió un error al restablecer la contraseña."
                 });
             }
+        }
+
+        private int? ObtenerIdUsuarioAutenticado()
+        {
+            string? identificador = User.FindFirstValue(
+                ClaimTypes.NameIdentifier);
+
+            if (int.TryParse(identificador, out int idUsuario)
+                && idUsuario > 0)
+            {
+                return idUsuario;
+            }
+
+            return null;
         }
 
 
