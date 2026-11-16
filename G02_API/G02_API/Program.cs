@@ -13,7 +13,7 @@ builder.Services.AddScoped<CorreoService>();
 builder.Services.AddScoped<TokenRecuperacionService>();
 builder.Services.AddScoped<JwtService>();
 
-// Configuración JWT
+// Configuración JWT 
 var jwtKey = builder.Configuration["Jwt:Key"]
     ?? throw new InvalidOperationException(
         "No se configuró la clave JWT.");
@@ -59,7 +59,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
     app.MapScalarApiReference();
 }
-
+app.UseExceptionHandler("/api/Error/CapturarError");
 app.UseHttpsRedirection();
 
 // Autenticación y autorización
