@@ -1,5 +1,6 @@
 ﻿@{
     var nombreUsuario = Context.Session.GetString("Nombre") ?? "Usuario";
+    var controladorActual = ViewContext.RouteData.Values["controller"]?.ToString();
 }
 
 <!DOCTYPE html>
@@ -78,7 +79,7 @@
                         <span class="menu-header-text">Mi espacio</span>
                     </li>
 
-                    <li class="menu-item active">
+                    <li class="menu-item @(controladorActual == "Usuario" ? "active" : "")">
                         <a asp-controller="Usuario"
                            asp-action="Index"
                            class="menu-link">
@@ -87,10 +88,12 @@
                         </a>
                     </li>
 
-                    <li class="menu-item">
-                        <a href="#" class="menu-link">
+                    <li class="menu-item @(controladorActual == "Recetas" ? "active" : "")">
+                        <a asp-controller="Recetas"
+                           asp-action="Index"
+                           class="menu-link">
                             <i class="menu-icon tf-icons bx bx-book-open"></i>
-                            <div>Explorar recetas</div>
+                            <div>Mis recetas</div>
                         </a>
                     </li>
 

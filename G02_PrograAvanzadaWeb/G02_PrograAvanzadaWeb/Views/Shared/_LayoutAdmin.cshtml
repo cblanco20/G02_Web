@@ -163,11 +163,11 @@
 
                     </li>
 
-                    <li class="menu-item">
+                    <li class="menu-item @(controladorActual == "Ingredientes" ? "active" : "")">
 
-                        <a href="#"
-                           class="menu-link"
-                           title="Próximamente">
+                        <a asp-controller="Ingredientes"
+                           asp-action="Index"
+                           class="menu-link">
 
                             <i class="menu-icon tf-icons bx bx-food-menu"></i>
 

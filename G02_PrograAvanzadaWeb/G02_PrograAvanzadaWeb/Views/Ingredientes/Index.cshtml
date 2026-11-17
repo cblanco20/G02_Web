@@ -1,0 +1,185 @@
+﻿@model IngredientesIndexViewModel
+
+@{
+    ViewData["Title"] = "Ingredientes";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="mealprep-dashboard">
+
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+        <div>
+            <h4 class="mp-titulo-seccion mb-1">
+                <i class="bx bx-food-menu me-2"></i>
+                Ingredientes
+            </h4>
+            <p class="text-muted mb-0">
+                Administra el catálogo de ingredientes que usan los recetarios.
+            </p>
+        </div>
+
+        <span class="badge bg-label-success rounded-pill px-3 py-2">
+            <i class="bx bx-shield-quarter me-1"></i>
+            Panel administrativo
+        </span>
+    </div>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            <i class="bx bx-error-circle me-2"></i>
+            @TempData["Error"]
+        </div>
+    }
+
+    @if (TempData["Exito"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            <i class="bx bx-check-circle me-2"></i>
+            @TempData["Exito"]
+        </div>
+    }
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Nuevo ingrediente</h5>
+        </div>
+
+        <div class="card-body">
+            <form method="post"
+                  asp-controller="Ingredientes"
+                  asp-action="Crear"
+                  class="row g-3 align-items-end">
+
+                <div class="col-md-6">
+                    <label for="nombreIngrediente" class="form-label fw-semibold">Nombre</label>
+                    <input type="text"
+                           id="nombreIngrediente"
+                           name="nombreIngrediente"
+                           class="form-control"
+                           maxlength="150"
+                           required />
+                </div>
+
+                <div class="col-md-4">
+                    <label for="idUnidad" class="form-label fw-semibold">Unidad de medida</label>
+                    <select id="idUnidad" name="idUnidad" class="form-select" required>
+                        <option value="">Seleccione una unidad</option>
+                        @foreach (var unidad in Model.Unidades)
+                        {
+                            <option value="@unidad.IdUnidad">
+                                @unidad.NombreUnidad (@unidad.Abreviatura)
+                            </option>
+                        }
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bx bx-plus me-1"></i>
+                        Agregar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Ingrediente</th>
+                            <th>Unidad</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var ingrediente in Model.Ingredientes)
+                        {
+                            <tr>
+                                <td>
+                                    <span class="text-muted">#@ingrediente.IdIngrediente</span>
+                                </td>
+
+                                <td class="fw-semibold">@ingrediente.NombreIngrediente</td>
+
+                                <td>@ingrediente.NombreUnidad (@ingrediente.Abreviatura)</td>
+
+                                <td>
+                                    @if (ingrediente.Activo)
+                                    {
+                                        <span class="badge bg-label-success">
+                                            <i class="bx bx-check-circle me-1"></i>
+                                            Activo
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-label-danger">
+                                            <i class="bx bx-x-circle me-1"></i>
+                                            Inactivo
+                                        </span>
+                                    }
+                                </td>
+
+                                <td>
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <a asp-controller="Ingredientes"
+                                           asp-action="Editar"
+                                           asp-route-id="@ingrediente.IdIngrediente"
+                                           class="btn btn-sm btn-outline-secondary">
+                                            <i class="bx bx-edit me-1"></i>
+                                            Editar
+                                        </a>
+
+                                        <form method="post"
+                                              asp-controller="Ingredientes"
+                                              asp-action="CambiarEstado">
+                                            <input type="hidden"
+                                                   name="idIngrediente"
+                                                   value="@ingrediente.IdIngrediente" />
+
+                                            <input type="hidden"
+                                                   name="activo"
+                                                   value="@(ingrediente.Activo ? "false" : "true")" />
+
+                                            @if (ingrediente.Activo)
+                                            {
+                                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                    <i class="bx bx-hide me-1"></i>
+                                                    Desactivar
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <button type="submit" class="btn btn-sm btn-outline-success">
+                                                    <i class="bx bx-show me-1"></i>
+                                                    Activar
+                                                </button>
+                                            }
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+
+                        @if (Model.Ingredientes.Count == 0)
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-4">
+                                    No hay ingredientes registrados.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

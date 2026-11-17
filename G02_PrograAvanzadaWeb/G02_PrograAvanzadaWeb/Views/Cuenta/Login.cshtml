@@ -19,6 +19,13 @@
                             </div>
                         }
 
+                        @if (TempData["Error"] != null)
+                        {
+                            <div class="alert alert-danger">
+                                @TempData["Error"]
+                            </div>
+                        }
+
                         <div class="mealprep-login-brand text-center">
                             <a asp-controller="Home"
                                asp-action="Index">

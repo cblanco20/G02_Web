@@ -1,5 +1,7 @@
-﻿using G02_PrograAvanzadaWeb.Models;
+using G02_PrograAvanzadaWeb.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 
 namespace G02_PrograAvanzadaWeb.Controllers
@@ -16,25 +18,23 @@ namespace G02_PrograAvanzadaWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            // Verificar que el usuario haya iniciado sesión.
-            if (HttpContext.Session.GetInt32("Autenticado") != 1)
+            var acceso = ValidarAcceso();
+            if (acceso != null)
             {
-                return RedirectToAction("Login", "Cuenta");
-            }
-
-            // Permitir el acceso únicamente al Administrador.
-            if (HttpContext.Session.GetInt32("IdRol") != 2)
-            {
-                return StatusCode(403);
+                return acceso;
             }
 
             try
             {
-                // Crear el cliente HTTP configurado para la API.
-                var cliente = _httpClientFactory.CreateClient("MealPrepAPI");
+                using var solicitud = CrearSolicitud(HttpMethod.Get, "api/Usuarios/Consultar");
+                using var respuesta = await _httpClientFactory
+                    .CreateClient("MealPrepAPI")
+                    .SendAsync(solicitud);
 
-                
-                var respuesta = await cliente.GetAsync("api/Usuarios/Consultar");
+                if (EsSesionVencida(respuesta))
+                {
+                    return CerrarPorVencimiento();
+                }
 
                 if (!respuesta.IsSuccessStatusCode)
                 {
@@ -42,16 +42,14 @@ namespace G02_PrograAvanzadaWeb.Controllers
                     return View();
                 }
 
-                
                 var usuarios = await respuesta.Content
                     .ReadFromJsonAsync<List<UsuarioConsulta>>();
 
-                
                 ViewBag.TotalUsuarios = usuarios?.Count ?? 0;
 
                 return View();
             }
-            catch (Exception)
+            catch (HttpRequestException)
             {
                 TempData["Error"] = "Ocurrió un error al consultar los usuarios.";
                 return View();
@@ -61,25 +59,23 @@ namespace G02_PrograAvanzadaWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> Usuarios()
         {
-            // Verificar que el usuario haya iniciado sesión.
-            if (HttpContext.Session.GetInt32("Autenticado") != 1)
+            var acceso = ValidarAcceso();
+            if (acceso != null)
             {
-                return RedirectToAction("Login", "Cuenta");
-            }
-
-            // Permitir el acceso únicamente al Administrador.
-            if (HttpContext.Session.GetInt32("IdRol") != 2)
-            {
-                return StatusCode(403);
+                return acceso;
             }
 
             try
             {
-                // Crear el cliente HTTP configurado para la API.
-                var cliente = _httpClientFactory.CreateClient("MealPrepAPI");
+                using var solicitud = CrearSolicitud(HttpMethod.Get, "api/Usuarios/Consultar");
+                using var respuesta = await _httpClientFactory
+                    .CreateClient("MealPrepAPI")
+                    .SendAsync(solicitud);
 
-                // Consultar los usuarios registrados.
-                var respuesta = await cliente.GetAsync("api/Usuarios/Consultar");
+                if (EsSesionVencida(respuesta))
+                {
+                    return CerrarPorVencimiento();
+                }
 
                 if (!respuesta.IsSuccessStatusCode)
                 {
@@ -87,16 +83,14 @@ namespace G02_PrograAvanzadaWeb.Controllers
                     return View(new List<UsuarioConsulta>());
                 }
 
-                // Convertir la respuesta JSON en una lista de usuarios.
                 var usuarios = await respuesta.Content
                     .ReadFromJsonAsync<List<UsuarioConsulta>>();
 
                 return View(usuarios ?? new List<UsuarioConsulta>());
             }
-            catch (Exception)
+            catch (HttpRequestException)
             {
                 TempData["Error"] = "Ocurrió un error al conectar con la API.";
-
                 return View(new List<UsuarioConsulta>());
             }
         }
@@ -105,26 +99,18 @@ namespace G02_PrograAvanzadaWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CambiarEstado(int idUsuario, bool activo)
         {
-            // Verificar que el usuario haya iniciado sesión.
-            if (HttpContext.Session.GetInt32("Autenticado") != 1)
+            var acceso = ValidarAcceso();
+            if (acceso != null)
             {
-                return RedirectToAction("Login", "Cuenta");
+                return acceso;
             }
 
-            // Permitir la operación únicamente al Administrador.
-            if (HttpContext.Session.GetInt32("IdRol") != 2)
-            {
-                return StatusCode(403);
-            }
-
-            // Validar el identificador del usuario.
             if (idUsuario <= 0)
             {
                 TempData["Error"] = "El usuario seleccionado no es válido.";
                 return RedirectToAction("Usuarios");
             }
 
-            // Evitar que el administrador modifique su propia cuenta.
             if (idUsuario == HttpContext.Session.GetInt32("IdUsuario"))
             {
                 TempData["Error"] = "No puedes modificar el estado de tu propia cuenta.";
@@ -133,21 +119,21 @@ namespace G02_PrograAvanzadaWeb.Controllers
 
             try
             {
-                // Crear el cliente HTTP configurado para la API.
-                var cliente = _httpClientFactory.CreateClient("MealPrepAPI");
-
-                // Preparar los datos que recibirá la API.
-                var datos = new
+                using var solicitud = CrearSolicitud(HttpMethod.Put, "api/Usuarios/CambiarEstado");
+                solicitud.Content = JsonContent.Create(new
                 {
                     IdUsuario = idUsuario,
                     Activo = activo
-                };
+                });
 
-                // Enviar la solicitud al método CambiarEstado de la API.
-                var respuesta = await cliente.PutAsJsonAsync(
-                    "api/Usuarios/CambiarEstado",
-                    datos
-                );
+                using var respuesta = await _httpClientFactory
+                    .CreateClient("MealPrepAPI")
+                    .SendAsync(solicitud);
+
+                if (EsSesionVencida(respuesta))
+                {
+                    return CerrarPorVencimiento();
+                }
 
                 if (respuesta.IsSuccessStatusCode)
                 {
@@ -160,12 +146,56 @@ namespace G02_PrograAvanzadaWeb.Controllers
                     TempData["Error"] = "No se pudo cambiar el estado del usuario.";
                 }
             }
-            catch (Exception)
+            catch (HttpRequestException)
             {
                 TempData["Error"] = "Ocurrió un error al conectar con la API.";
             }
 
             return RedirectToAction("Usuarios");
+        }
+
+        private IActionResult? ValidarAcceso()
+        {
+            if (HttpContext.Session.GetInt32("Autenticado") != 1)
+            {
+                return RedirectToAction("Login", "Cuenta");
+            }
+
+            if (HttpContext.Session.GetInt32("IdRol") != 2)
+            {
+                return StatusCode(403);
+            }
+
+            if (string.IsNullOrWhiteSpace(HttpContext.Session.GetString("TokenJWT")))
+            {
+                return CerrarPorVencimiento();
+            }
+
+            return null;
+        }
+
+        private HttpRequestMessage CrearSolicitud(HttpMethod metodo, string ruta)
+        {
+            var solicitud = new HttpRequestMessage(metodo, ruta);
+
+            solicitud.Headers.Authorization = new AuthenticationHeaderValue(
+                "Bearer",
+                HttpContext.Session.GetString("TokenJWT"));
+
+            return solicitud;
+        }
+
+        private static bool EsSesionVencida(HttpResponseMessage respuesta)
+        {
+            return respuesta.StatusCode == HttpStatusCode.Unauthorized
+                || respuesta.StatusCode == HttpStatusCode.Forbidden;
+        }
+
+        private IActionResult CerrarPorVencimiento()
+        {
+            HttpContext.Session.Clear();
+            TempData["Error"] = "Tu sesión ha vencido. Inicia sesión nuevamente.";
+            return RedirectToAction("Login", "Cuenta");
         }
     }
 }

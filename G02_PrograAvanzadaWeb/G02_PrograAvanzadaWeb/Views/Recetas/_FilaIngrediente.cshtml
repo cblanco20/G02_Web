@@ -1,0 +1,39 @@
+﻿@model FilaIngredienteViewModel
+
+<div class="row g-2 align-items-center mb-2 fila-ingrediente">
+    <div class="col-md-6">
+        <select name="Ingredientes[@(Model.Indice)].IdIngrediente"
+                class="form-select ingrediente-select">
+            <option value="0" data-unidad="">Seleccione un ingrediente</option>
+            @foreach (var ingrediente in Model.Opciones)
+            {
+                <option value="@ingrediente.IdIngrediente"
+                        data-unidad="@ingrediente.Abreviatura"
+                        selected="@(ingrediente.IdIngrediente == Model.Fila.IdIngrediente)">
+                    @ingrediente.NombreIngrediente
+                </option>
+            }
+        </select>
+    </div>
+
+    <div class="col-md-4">
+        <div class="input-group">
+            <input type="text"
+                   inputmode="decimal"
+                   name="Ingredientes[@(Model.Indice)].Cantidad"
+                   value="@Model.Fila.Cantidad"
+                   class="form-control ingrediente-cantidad"
+                   placeholder="Cantidad" />
+
+            <span class="input-group-text ingrediente-unidad"></span>
+        </div>
+    </div>
+
+    <div class="col-md-2 text-md-end">
+        <button type="button"
+                class="btn btn-sm btn-outline-danger quitar-ingrediente">
+            <i class="bx bx-trash me-1"></i>
+            Quitar
+        </button>
+    </div>
+</div>

@@ -171,11 +171,10 @@ namespace G02_API.Controllers
             });
         }
 
+        [Authorize(Roles = "2")]
         [HttpGet("Consultar")]
         public IActionResult Consultar()
         {
-            throw new InvalidOperationException("Prueba de registro de errores");
-
             var connectionString = _configuration
                 .GetValue<string>("Variables:ConnectionString");
 
@@ -331,6 +330,7 @@ namespace G02_API.Controllers
 
 
 
+        [Authorize(Roles = "2")]
         [HttpPut("CambiarEstado")]
         public IActionResult CambiarEstado([FromBody] CambiarEstadoUsuario modelo)
         {
